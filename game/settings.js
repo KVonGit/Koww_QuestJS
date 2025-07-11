@@ -3,8 +3,8 @@
 
 settings.title = "The Adventures of Koww the Magician (QuestJS port)"
 settings.author = "Brian the Great"
-settings.version = "0.1 beta"
-settings.thanks = []
+settings.version = "0.1.1 beta"
+settings.thanks = ["Brian the Great","AlexWarren","cellarderecho","ThePix"]
 settings.warnings = "Puns, Mild Profanity"
 settings.playMode = "play"
 
