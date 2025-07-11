@@ -3,11 +3,12 @@
 
 settings.title = "The Adventures of Koww the Magician (QuestJS port)"
 settings.author = "Brian the Great"
-settings.version = "0.1.1 beta"
-settings.thanks = ["Brian the Great","AlexWarren","cellarderecho","ThePix","DavyB"]
+settings.version = "0.1.2 beta"
+settings.thanks = ["Brian the Great","AlexWarren","cellarderecho","ThePix","DavyB","Pertex"]
 settings.warnings = "Puns, Mild Profanity"
 settings.playMode = "play"
 
+settings.favicon = "favicon-32x32.png"
 
 settings.textInput = true
 
@@ -37,8 +38,7 @@ settings.inventoryPane = [
 
 settings.roomTemplate = [
   "You are in {color:red:{hereName}}.",
-  "{hereDesc}",
-  "You can go {exitsHere:{exits}}."
+  "{hereDesc}"
 ]
 
 settings.libraries.push('item-links')

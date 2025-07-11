@@ -142,7 +142,7 @@ createItem("purplePaint", {
 createRoom("kowwsChasm", {
   alias: "Koww's Chasm",
   east: new Exit("zekesFarm"),
-  desc:"You are outside in a pasture of pure, pure green.  Green as far as the eye can see.{once:  But you, Koww the Magician, are not satisfied.  The grass may be even greener on the other side of the {nm:chasm}... you must know!  Also in the area is}{notfirst:<br/><br/>You can see the {object:chasm} and} a very undramatic {nm:sign}."
+  desc:"You are outside in a pasture of pure, pure green.  Green as far as the eye can see.{once:  But you, Koww the Magician, are not satisfied.  The grass may be even greener on the other side of the {nm:chasm}... you must know!  Also in the area is}{notfirst:<br/><br/>You can see the {object:chasm} and} a very undramatic {nm:sign}.<br/><br/>You can go {exitsHere:{exits}}."
 })
 
 createItem("chasm", TAKEABLE(), {
@@ -161,7 +161,7 @@ createItem("sign", TAKEABLE(), {
 createRoom("zekesFarm", {
   usedefaultprefix:false,
   alias:"Zeke's Farm",
-  desc:"You stand outside of a small {nm:zekesFarmhouseEntrance} with a {nm:zekesSiloEntrance} beside it.<br/><br/>There is a {nm:haystack} and a {nm:pond} here.",
+  desc:"You stand outside of a small {nm:zekesFarmhouseEntrance} with a {nm:zekesSiloEntrance} beside it.<br/><br/>There is a {nm:haystack} and a {nm:pond} here.<br/><br/>You can go {exitsHere:{exits}}.",
   south:new Exit("goblinTrail"),
   west: new Exit("kowwsChasm"),
   north:new Exit("landOfTheNecroYaks"),
@@ -214,7 +214,7 @@ createItem("zekesSiloEntrance", {
 
 createRoom("zekesFarmhouse", {
   alias:"Zeke's Farmhouse",
-  desc:"You're inside Farmer Zeke's rather cramped home.  No one's here at the moment.  Perhaps you should go away.{ifIs:table:loc:zekesFarmhouse:<br/><br/>There is a {nm:table} here.}",
+  desc:"You're inside Farmer Zeke's rather cramped home.  No one's here at the moment.  Perhaps you should go away.{ifIs:table:loc:zekesFarmhouse:<br/><br/>There is a {nm:table} here.}<br/><br/>You can go {exitsHere:{exits}}.",
   out:new Exit("zekesFarm")
 })
 
@@ -243,7 +243,7 @@ createItem("treasureChest", CONTAINER(true), {
 
 createRoom("zekesSilo", {
   alias:"Zeke's Silo",
-  desc:"Gee, this place smells just like rotting feed.  Standing in the silo, grinning like the idiot that he is, is Farmer {nm:Zeke}.",
+  desc:"Gee, this place smells just like rotting feed.  Standing in the silo, grinning like the idiot that he is, is Farmer {nm:Zeke}.<br/><br/>You can go {exitsHere:{exits}}.",
   out:new Exit("zekesFarm")
 })
 
@@ -278,7 +278,7 @@ createItem("Zeke", NPC(false), {
 
 createRoom("goblinTrail", {
   alias:"Goblin Trail",
-  desc:"The stench of goblins permeates this place.{once:  Goblins are small, annoying creatures who like to fight anyone who looks weak.  Fortunately, you don't look weak.}<br/><br/>The {nm:road} leads north or south.",
+  desc:"The stench of goblins permeates this place.{once:  Goblins are small, annoying creatures who like to fight anyone who looks weak.  Fortunately, you don't look weak.}<br/><br/>The {nm:road} leads {exitsHere:{exits}}.",
   north:new Exit("zekesFarm"),
   south:new Exit("goblinLair")
 })
@@ -292,7 +292,7 @@ createItem("road", TAKEABLE(), {
 
 createRoom("goblinLair", {
   alias:"Goblin Lair",
-  desc:"About twenty goblins patrol the front of {once:a}{notfirst:this} massive cave complex.{once:  They eye you for a moment, then decide not to attack.  You return the favor and don't kill them.}<br/><br/>There is a {nm:cliff} here.<br/><br/>A {nm:goblinGuard} is nearby.",
+  desc:"About twenty goblins patrol the front of {once:a}{notfirst:this} massive cave complex.{once:  They eye you for a moment, then decide not to attack.  You return the favor and don't kill them.}<br/><br/>There is a {nm:cliff} here.<br/><br/>A {nm:goblinGuard} is nearby.<br/><br/>You can go <span class=\"exit-link\" onclick=\"runCmd('in')\">Inside the Goblin Lair</span>.<br/><br/>You can go <span class=\"exit-link\" onclick=\"runCmd('north')\">north</span>.",
   north:new Exit("goblinTrail"),
   in:new Exit("insideTheGoblinLair"),
   dests:[
@@ -350,7 +350,7 @@ createItem("insideTheGoblinLairEntrance", {
 
 createRoom("insideTheGoblinLair", {
   alias:"Inside the Goblin Lair",
-  desc:"You are escorted to the Goblin King's throne room, a large chamber ornamented with statues of nude female goblins.{once:  You try hard to avoid puking.}The {nm:goblinKing} is here.",
+  desc:"You are escorted to the Goblin King's throne room, a large chamber ornamented with statues of nude female goblins.{once:  You try hard to avoid puking.}The {nm:goblinKing} is here.<br/><br/>You can go {exitsHere:{exits}}.",
   out:new Exit("goblinLair")
 })
 
@@ -401,7 +401,7 @@ createItem("statues", TAKEABLE(), {
 
 createRoom("landOfTheNecroYaks", {
   alias:"Land of the NecroYaks",
-  desc:"The greenness of the farmland dissolves into gray bleakness as you pass into the land of the NecroYaks.{once:  Yaks are the sworn enemies of cows -- you'd better stay on your toes!}<br/><br/>There is a {nm:sign1} here.",
+  desc:"The greenness of the farmland dissolves into gray bleakness as you pass into the land of the NecroYaks.{once:  Yaks are the sworn enemies of cows -- you'd better stay on your toes!}<br/><br/>There is a {nm:sign1} here.<br/><br/>You can go {exitsHere:{exits}}.",
   south:new Exit("zekesFarm"),
   north:new Exit("ambushPoint")
 })
@@ -416,7 +416,7 @@ createItem("sign1", TAKEABLE(), {
 
 createRoom("ambushPoint", {
   alias:"Deep in NecroYak Territory",
-  desc:"A cliff face blocks your way here.  It's steep -- you can't climb.  If you want to continue, you'll have to {command:search} the face.",
+  desc:"A cliff face blocks your way here.  It's steep -- you can't climb.  If you want to continue, you'll have to search the face.<br/><br/>You can go {exitsHere:{exits}}.",
   south:new Exit("landOfTheNecroYaks"),
   searchable:true,
   search:function(){
@@ -436,7 +436,7 @@ createRoom("ambushPoint", {
 
 createRoom("phoenixMountainPass", {
   alias:"Phoenix Mountain Pass",
-  desc:"The towering {nm:mountains} surround you on all sides but back to your west.  Passage farther east is remotely possible, should you be brave or foolhardy enough to try it.",
+  desc:"The towering {nm:mountains} surround you on all sides but back to your west.  Passage farther east is remotely possible, should you be brave or foolhardy enough to try it.<br/><br/>You can go {exitsHere:{exits}}.",
   west:new Exit("zekesFarm"),
   east:new Exit("phoenixPeak")
 })
@@ -461,7 +461,7 @@ createItem("mountains", TAKEABLE(), {
 
 createRoom("phoenixPeak", {
   alias:"Phoenix Peak",
-  desc:"After hard hours of climbing, you finally reach the summit of Phoenix Peak.  Here, in all its glory, sits the {nm:resplendentMagnificentPhoenix}.",
+  desc:"After hard hours of climbing, you finally reach the summit of Phoenix Peak.  Here, in all its glory, sits the {nm:resplendentMagnificentPhoenix}.<br/><br/>You can go {exitsHere:{exits}}.",
   west:new Exit("phoenixMountainPass")
 })
 
