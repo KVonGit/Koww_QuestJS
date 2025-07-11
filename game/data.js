@@ -147,7 +147,7 @@ createRoom("kowwsChasm", {
 
 createItem("chasm", TAKEABLE(), {
   loc:"kowwsChasm",
-  examine:"That's the chasm you simply MUST cross!  Surely the only way to cross it is to {command:FLY}!",
+  examine:"That's the chasm you simply MUST cross!  Surely the only way to cross it is to FLY!",
   take:"Don't worry, the men in the white coats will soon be here to deal with you."
 })
 
@@ -361,7 +361,7 @@ createItem("goblinKing", NPC(false), {
   defArticle:"the",
   indefArticle:"the",
   examine:"An officious-looking, double-chinned goblin monarch sits royally atop a throne of deer hide.",
-  talkto:"\"Hoo hoo hoo!  Goblinz{if goblin spit.parent=possitems: so grate, our spit is assid}!{ifIs:w:goblinSpit:loc:possitems:  We spit on yu if yu make us angree!}{ifIs:jadeStatuette:loc:possitems:  If yu hav tiny statyoo of jade, we giv yu nice thing!}\"",
+  talkto:"\"Hoo hoo hoo!  Goblinz{ifIs:goblinSpit:parent:possitems: so grate, our spit is assid}!{ifIs:w:goblinSpit:loc:possitems:  We spit on yu if yu make us angree!}{ifIs:jadeStatuette:loc:possitems:  If yu hav tiny statyoo of jade, we giv yu nice thing!}\"",
   receiveItems:[
     {
       item:w.jadeStatuette,
