@@ -26,6 +26,26 @@ settings.setup = function() {
   }
   msg(`<div id="status" style="display: block; height: 30px; position: fixed; top: 0px; margin-left: auto; margin-right: auto; font-size: 14pt; font-weight:bold; padding:0; color: white; background: black; min-width: 600px; z-index:100;"><div id="location" style="padding-left:4px;padding-top:4px;">Koww's Chasm</div></div>`)
   lang.go_successful = false
+
+  if (window.innerWidth < 954){
+    document.querySelector('#main').removeAttribute('style')
+    let mobilePatch = `@media only screen and (max-width: 953px) 
+{
+  #panes{
+    display: none !important;
+  }
+  #main{
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .object-link{
+    font-size: inherit !important;
+  }
+}`
+    let styleTag = document.createElement('style');
+    styleTag.innerHTML = mobilePatch;
+    document.head.appendChild(styleTag);
+  }
 }
 
 settings.statusPane = false
