@@ -3,7 +3,7 @@
 
 settings.title = "The Adventures of Koww the Magician (QuestJS port)"
 settings.author = "Brian the Great"
-settings.version = "0.1.3 beta"
+settings.version = "0.1.4 beta"
 settings.thanks = ["Brian the Great","AlexWarren","cellarderecho","ThePix","DavyB","Pertex"]
 settings.warnings = "Puns, Mild Profanity"
 settings.playMode = "play"
@@ -29,22 +29,10 @@ settings.setup = function() {
 
   if (window.innerWidth < 954){
     document.querySelector('#main').removeAttribute('style')
-    let mobilePatch = `@media only screen and (max-width: 953px) 
-{
-  #panes{
-    display: none !important;
+    msg("detected width less than 954")
   }
-  #main{
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-  .object-link{
-    font-size: inherit !important;
-  }
-}`
-    let styleTag = document.createElement('style');
-    styleTag.innerHTML = mobilePatch;
-    document.head.appendChild(styleTag);
+  else {
+    msg("did not width less than 954")
   }
 }
 
