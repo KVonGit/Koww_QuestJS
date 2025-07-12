@@ -3,7 +3,7 @@
 
 settings.title = "The Adventures of Koww the Magician (QuestJS port)"
 settings.author = "Brian the Great"
-settings.version = "0.1.4 beta"
+settings.version = "0.1.5 beta"
 settings.thanks = ["Brian the Great","AlexWarren","cellarderecho","ThePix","DavyB","Pertex"]
 settings.warnings = "Puns, Mild Profanity"
 settings.playMode = "play"
@@ -26,14 +26,6 @@ settings.setup = function() {
   }
   msg(`<div id="status" style="display: block; height: 30px; position: fixed; top: 0px; margin-left: auto; margin-right: auto; font-size: 14pt; font-weight:bold; padding:0; color: white; background: black; min-width: 600px; z-index:100;"><div id="location" style="padding-left:4px;padding-top:4px;">Koww's Chasm</div></div>`)
   lang.go_successful = false
-
-  if (window.innerWidth < 954){
-    document.querySelector('#main').removeAttribute('style')
-    msg("detected width less than 954")
-  }
-  else {
-    msg("did not width less than 954")
-  }
 }
 
 settings.statusPane = false
