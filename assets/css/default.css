@@ -251,7 +251,7 @@ pre {
   width: 170px; /* Set the width of the sidebar */
   position: fixed; /* Fixed Sidebar (stay in place on scroll) */
   z-index: 1; /* Stay on top */
-  top: 0; /* Stay at the top */
+  top: 26px; /* Stay (almost) at the top */
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 5px;
   padding-left: 5px;

@@ -1,13 +1,14 @@
 "use strict"
 createItem("player", PLAYER(), {
   examine:function() {
-    msg ("You look like you're ready for an adventure. ")
+    msg ("You are Koww the Magician!")
   },
   loc:"kowwsChasm",
 })
 
 createItem("milk", {
   loc:"player",
+  examine:"Your magic milk, Zeke's favorite!",
   defArticle:"your",
   indefArticle:"your",
   synonyms:["my milk"],
@@ -18,7 +19,8 @@ createRoom("possitems")
 
 createItem("pitchfork", {
   loc:"possitems",
-    use:function(){
+  examine:"A sharp looking tool!",
+  use:function(){
     if (player.loc === "zekesFarm"){
       msg("You stab the pitchfork into the haystack.  Lo and behold, the haystack falls down into a hole in the ground, along with the pitchfork!  Inside the hole is a jade statuette, which you take.")
       w.pitchfork.loc = false
@@ -41,16 +43,19 @@ createItem("pitchfork", {
 createItem("kowwNothing", {
   loc:"possitems",
   alias:"nothing",
+  examine:"You see nothing.",
   getDisplayName:function(){return "nothing"}
 })
 
 createItem("jadeStatuette", {
   alias:"jade statuette",
-  loc:"possitems"
+  loc:"possitems",
+  examine:"An ugly statuette, made of jade."
 })
 
 createItem("something", {
   loc:"possitems",
+  examine:"About what you'd expect something to look like in this game.",
   getDisplayName:function(){return "something"},
   use:function(){
     if (player.loc === "zekesFarm"){
@@ -74,17 +79,20 @@ createItem("something", {
 
 createItem("duckTurd", {
   loc:"possitems",
-  alias:"duck turd"
+  alias:"duck turd",
+  examine:"A foul dropping."
 })
 
 createItem("goblinSpit", {
   loc:"possitems",
-  alias:"goblin spit"
+  alias:"goblin spit",
+  examine:"Yuck... It's chunky!"
 })
 
 createItem("grapplingHook", {
   loc:"possitems",
   alias:"grappling hook",
+  examine:"It looks strong enough to support a cow!",
   use:function(){
     if (player.loc === "phoenixMountainPass"){
       msg("On top of the mountain, you find a bunch of purple paint, which you take.  After descending again, you ditch your grappling hook.")
@@ -107,12 +115,14 @@ createItem("grapplingHook", {
 
 createItem("wingFeather", {
   loc:"possitems",
-  alias:"wing feather"
+  alias:"wing feather",
+  examine:"A wing feather from a Phoenix."
 })
 
 createItem("flyScroll", {
   loc:"possitems",
   alias:"Fly Scroll",
+  examine:"Try using it (when in the proper location).",
   indefArticle:"the",
   defArticle:"the",
   use:function(){
@@ -129,6 +139,7 @@ createItem("flyScroll", {
 createItem("purplePaint", {
   loc:"possitems",
   alias:"purple paint",
+  examine:"It's paint, and it's purple. (You'll have to find a good place to use it!)",
   use:function(){
     if (player.loc === "zekesSilo"){
       msg("You spread the purple paint on yourself.  Suddenly Farmer Zeke bursts into song!<br/><br/>\"{i:I never saw a purple cow, and I never hope to see one; but I can tell you anyhow, I'd rather see than be one!}\"<br/><br/>Wonderful!  You have just activated the scenario's secret feature!  That's it.  Return to your home.  There's nothing more to do here.")
@@ -510,3 +521,13 @@ createItem("resplendentMagnificentPhoenix", NPC(false), {
     list.push("Speak to")
   },
 })
+
+createItem("event0", 
+  {
+    eventPeriod:1,
+    eventActive:true,
+    eventScript:function() { 
+      document.querySelector('#location').innerHTML = processText('{hereName}')
+     }
+  }
+)
