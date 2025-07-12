@@ -9,9 +9,6 @@
 
 @media only screen and (max-width: 953px) 
 {
-  #panes{
-    display: none !important;
-  }
   #main{
     margin-left: 0 !important;
     margin-right: 0 !important;

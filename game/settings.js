@@ -3,7 +3,7 @@
 
 settings.title = "The Adventures of Koww the Magician (QuestJS port)"
 settings.author = "Brian the Great"
-settings.version = "0.1.5 beta"
+settings.version = "0.1.6"
 settings.thanks = ["Brian the Great","AlexWarren","cellarderecho","ThePix","DavyB","Pertex"]
 settings.warnings = "Puns, Mild Profanity"
 settings.playMode = "play"
@@ -31,8 +31,8 @@ settings.setup = function() {
 settings.statusPane = false
 
 settings.panes = "right"
-settings.panesCollapseAt = 700
-
+settings.panesCollapseAt = 953
+settings.hintInvisiClues = true
 settings.inventoryPane = [
   {name:'Items Held', alt:'itemsHeld', test:settings.isHeldNotWorn, getLoc:function() { return player.name; } },
   {name:'Places and Objects Here', alt:'itemsHere', test:settings.isHere, getLoc:function() { return player.loc; } },

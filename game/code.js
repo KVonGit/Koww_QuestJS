@@ -153,3 +153,11 @@ commands.unshift(new Cmd('No',{
     return world.SUCCESS
   }
 }))
+
+commands.unshift(new Cmd('KowwMap', {
+  regex:/^map$|^show|view|x|examine|display map$/,
+  script:function(){
+    msg ("<pre style=\"font-size:1em;line-height:1.2em;\"><code>=======<br/>&#124;  N  &#124;<br/>&#124; W&#124;E &#124;<br/>&#124;  S  &#124;<br/>=======<br/><br/> {ifNot:zekesFarm.visited:0:{ifNot:landOfTheNecroYaks.visited:0: [{ifNot:ambushPoint.visited:0:Deep in NecroYak Territory:????????????????????????}]<br/>              &#124;}<br/>    [{ifNot:landOfTheNecroYaks.visited:0:Land of the NecroYaks:?????????????????????}]<br/>              &#124;}<br/>[Chasm*]-[{ifNot:zekesFarm.visited:0:Zeke's Farm:??????????}]{ifNot:zekesFarm.visited:0:-[{ifNot:phoenixMountainPass.visited:0:Phoenix Mountain Pass:?????????????????????}]{ifNot:phoenixMountainPass.visited:0:-[{ifNot:phoenixPeak.visited:0:Phoenix Peak:????????????}]}}<br/>{ifNot:zekesFarm.visited:0:        /     &#124;       \\<br/>    [{ifNot:zekesSilo.visited:0:Silo:????}]    &#124;    [{ifNot:zekesFarmhouse.visited:0:Farmhouse:?????????}]<br/>              &#124;<br/>        [{ifNot:goblinTrail.visited:0:Goblin Trail:????????????}]<br/> {ifNot:goblinTrail.visited:0:             &#124;            <br/>        [{ifNot:goblinLair.visited:0:Goblin Lair:???????????}]<br/> {ifNot:goblinLair.visited:0:             &#124;<br/>   [{ifNot:insideTheGoblinLair.visited:0:Inside the Goblin Lair:??????????????????????}]}}}<br/><br/><br/>(* Starting location)<br/></code><br/>    </pre>")
+    return world.SUCCESS
+  }
+}))

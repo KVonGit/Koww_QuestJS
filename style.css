@@ -92,24 +92,11 @@ To change the appearance of specific elements, tweak
 { 
 	padding-top: 2.4em;
 	margin-left: 15.4em;
-	width: 33em;
 	line-height: 1;
 	text-align: left;
 }
 
-/* 
-These set the sizes for the title (h1) and the author name (h2). 
 
-The ideal font-size for h1 may vary quite a bit depending on how long the 
-game's title is: larger for one-word titles, smaller for longer titles.
-
-Should we wish to remove the title entirely and allow the cover art alone
-to represent the game, we need only add the line "display: none;" to the
-definition of h1.
-
-*/
-h1 { font-size: 2em;  }
-h2 { font-size: 1em; line-height: .25;}
 
 /* The about formatting applies to blurb information. */
 
@@ -117,7 +104,6 @@ h2 { font-size: 1em; line-height: .25;}
 {
 	margin-top: 2.8em;
 	margin-left: 15.4em;
-	width: 33em;
 	text-align: left;
 }
 
@@ -142,7 +128,6 @@ the IFID for the game and suggests interpreters for the author to use. */
 .playinfo
 {
 	margin: 1em 0px 0px 15.4em;
-	width: 33em;
 }
 
 .playinfo p {
@@ -170,7 +155,7 @@ side of the page.
 {
 	list-style-type: none;
 	list-style-position: default;
-	padding: .4 em;
+	padding: .4em;
 }
 
 /* 
@@ -190,14 +175,13 @@ Source formatting applies to the source text on generated pages.
 {
 	margin-top: 1.4em;
 	margin-left: 15.4em;
-	width: 33em;
 	line-height: 1.4;
 }
 
 .sourceintroduction
 {
 	margin-left: 15.4em;
-	width: 33em;
+	width: 67em;
 }
 
 .sourceintroduction h1
@@ -308,7 +292,6 @@ Notes applies to footnotes on the source text.
 .notes
 {
 	margin-left: 16.8em;
-	width: 33em;
 }
 
 .notes p
