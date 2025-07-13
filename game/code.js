@@ -243,6 +243,13 @@ DEFAULT_ROOM.examine = function() {
 }
 
 /* FIX SCROLLING ON MOBILE */
+
+io.scrollToEnd = function() {
+  if (settings.autoscroll) {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+  }
+}
+
 // This should be called after each turn to ensure we are at the end of the page and the text box has the focus
 function endTurnUI(update) {
   if (!currentLocation) return errormsg("currentLocation not set (" + (player ? 'but player is' : 'nor is player') + ")")
