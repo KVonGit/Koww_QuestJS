@@ -544,12 +544,21 @@ createItem("resplendentMagnificentPhoenix", NPC(false), {
   },
 })
 
-createItem("event0", 
+createItem("kowwTurnscript", 
   {
     eventPeriod:1,
     eventActive:true,
     eventScript:function() { 
       document.querySelector('#location').innerHTML = processText('{hereName}')
+     }
+  }
+)
+
+createItem("resetUsingPronounTurnscript", 
+  {
+    eventPeriod:1,
+    eventActive:true,
+    eventScript:function() { 
       window.usingPronoun = false
      }
   }
