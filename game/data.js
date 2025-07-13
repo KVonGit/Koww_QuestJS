@@ -25,18 +25,22 @@ createItem("pitchfork", {
       msg("You stab the pitchfork into the haystack.  Lo and behold, the haystack falls down into a hole in the ground, along with the pitchfork!  Inside the hole is a jade statuette, which you take.")
       w.pitchfork.loc = false
       w.jadeStatuette.moveToFrom({char:player, item:w.jadeStatuette}, "char", "possitems")
-      return true
     }
-    return false
+    else{
+      msg ("Not here, not now.")
+    }
+    return true
   },
   useWith:function(char,obj){
     if (obj === w.haystack){
       msg("You stab the pitchfork into the haystack.  Lo and behold, the haystack falls down into a hole in the ground, along with the pitchfork!  Inside the hole is a jade statuette, which you take.")
       w.pitchfork.loc = false
       w.jadeStatuette.moveToFrom({char:player, item:w.jadeStatuette}, "char", "possitems")
-      return true
     }
-    return false
+    else{
+      msg ("You can't use it that way.")
+    }
+    return true
   }
 })
 
