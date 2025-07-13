@@ -164,6 +164,7 @@ commands.unshift(new Cmd('KowwMap', {
 
 tp.text_processors.exit = function(arr,params){
   if(arr.length === 1){
+    if (typeof itemlinks == 'undefined') return arr[0]
     return '<span class="exit-link" onclick="runCmd(\'' +
         arr[0] +
         "')\">" +
@@ -171,6 +172,7 @@ tp.text_processors.exit = function(arr,params){
         "</span>"
   }
   else{
+    if (typeof itemlinks == 'undefined') return arr[1]
     return '<span class="exit-link" onclick="runCmd(\'' +
         arr[0] +
         "')\">" +
@@ -184,7 +186,7 @@ world.enterRoom = function(exit) {
     return errormsg("This room, " + currentLocation.name + ", has no 'beforeEnter` function defined.  This is probably because it is not actually a room (it was not created with 'createRoom' and has not got the DEFAULT_ROOM template), but is an item. It is not clear what state the game will continue in.")
   }
   // Modified to disable all exit links when changing locations
-  itemLinks.disableAllLinks("exit-link");
+  if (typeof itemlinks != 'undefined') itemLinks.disableAllLinks("exit-link");
   // End of mod
   settings.beforeEnter(exit)
   if (currentLocation.visited === 0) {
