@@ -172,7 +172,7 @@ createItem("sign", TAKEABLE(), {
 createRoom("zekesFarm", {
   usedefaultprefix:false,
   alias:"Zeke's Farm",
-  desc:"You stand outside of a small {nm:zekesFarmhouseEntrance} with a {nm:zekesSiloEntrance} beside it.<br/><br/>There is a {nm:haystack} and a {nm:pond} here.<br/><br/>You can go {exit:west}, {exit:north}, {exit:east}, or {exit:south}.",
+  desc:"You stand outside of a small {exit:go to farmhouse:farmhouse} with a {exit:go to silo:silo} beside it.<br/><br/>There is a {nm:haystack} and a {nm:pond} here.<br/><br/>You can go {exit:west}, {exit:north}, {exit:east}, or {exit:south}.",
   south:new Exit("goblinTrail"),
   west: new Exit("kowwsChasm"),
   north:new Exit("landOfTheNecroYaks"),
@@ -181,7 +181,7 @@ createRoom("zekesFarm", {
     new Exit("zekesFarmhouse"),
     new Exit("zekesSilo")
   ],
-  in:new MultiExit(["zekesFarmhouse", "zekesSilo"])
+  in:new MultiExit(["zekesFarmhouse", "zekesSilo"], {scenery:true})
 })
 
 createItem("haystack", TAKEABLE(),  {
@@ -201,7 +201,7 @@ createItem("pond", TAKEABLE(),  {
 
 createItem("zekesFarmhouseEntrance", {
   loc:"zekesFarm",
-  alias:"farmhouse",
+  alias:"Zeke's farmhouse",
   listAlias:"Zeke's Farmhouse (place)",
   examine:"It's the entrance to the farmhouse.",
   otherSide:"zekesFarmhouse",
@@ -213,7 +213,7 @@ createItem("zekesFarmhouseEntrance", {
 
 createItem("zekesSiloEntrance", {
   loc:"zekesFarm",
-  alias:"silo",
+  alias:"Zeke's silo",
   listAlias:"Zeke's Silo (place)",
   examine:"It's the entrance to the silo.",
   otherSide:"zekesSilo",
@@ -344,7 +344,11 @@ createItem("cliff", TAKEABLE(), {
   loc:"goblinLair",
   examine:"It's a cliff; you could {command:climb it}, but it might be a difficult climb.",
   take:"If you want to {command:climb the cliff}, say so!",
-  climbverb:"After a difficult climb, you reach the top.  You're very pleased with yourself.  Unfortunately, the ledge crumbles beneath you, and you plummet back to the ground."
+  climbverb:"After a difficult climb, you reach the top.  You're very pleased with yourself.  Unfortunately, the ledge crumbles beneath you, and you plummet back to the ground.",
+    pronouns:lang.pronouns.plural,
+    verbFunction:function(list) {
+    list.push("Climb")
+  },
 })
 
 createItem("insideTheGoblinLairEntrance", {
@@ -467,7 +471,10 @@ createItem("mountains", TAKEABLE(), {
     }
     return world.SUCCESS
   },
-  pronouns:lang.pronouns.plural
+  pronouns:lang.pronouns.plural,
+    verbFunction:function(list) {
+    list.push("Climb")
+  },
 })
 
 createRoom("phoenixPeak", {

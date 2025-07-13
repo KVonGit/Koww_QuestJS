@@ -24,7 +24,7 @@ settings.setup = function() {
       }
     }
   }
-  msg(`<div id="status" style="display: block; height: 30px; position: fixed; top: 0px; margin-left: auto; margin-right: auto; font-size: 14pt; font-weight:bold; padding:0; color: white; background: black; min-width: 600px; z-index:100;"><div id="location" style="padding-left:4px;padding-top:4px;">Koww's Chasm</div></div>`)
+  msg(`<div id="status" style="display: block; height: 30px; position: fixed; top: 0px; margin-left: auto; margin-right: auto; font-size: 1.25em; padding:2px; color: #e1ebf2; background: black; min-width: 600px; z-index:100;"><div id="location" style="padding-left:4px;padding-top:4px; font-family:Antonio, sans-serif;">Koww's Chasm</div></div>`)
   lang.go_successful = false
 }
 

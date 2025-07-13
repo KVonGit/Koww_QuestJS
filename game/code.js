@@ -155,7 +155,7 @@ commands.unshift(new Cmd('No',{
 }))
 
 commands.unshift(new Cmd('KowwMap', {
-  regex:/^map$|^show|view|x|examine|display map$/,
+  regex:/^map$|^show|view|display map$/,
   script:function(){
     msg ("<pre style=\"font-size:1em;line-height:1.2em;\"><code>=======<br/>&#124;  N  &#124;<br/>&#124; W&#124;E &#124;<br/>&#124;  S  &#124;<br/>=======<br/><br/> {ifNot:zekesFarm.visited:0:{ifNot:landOfTheNecroYaks.visited:0: [{ifNot:ambushPoint.visited:0:Deep in NecroYak Territory:????????????????????????}]<br/>              &#124;}<br/>    [{ifNot:landOfTheNecroYaks.visited:0:Land of the NecroYaks:?????????????????????}]<br/>              &#124;}<br/>[Chasm*]-[{ifNot:zekesFarm.visited:0:Zeke's Farm:??????????}]{ifNot:zekesFarm.visited:0:-[{ifNot:phoenixMountainPass.visited:0:Phoenix Mountain Pass:?????????????????????}]{ifNot:phoenixMountainPass.visited:0:-[{ifNot:phoenixPeak.visited:0:Phoenix Peak:????????????}]}}<br/>{ifNot:zekesFarm.visited:0:        /     &#124;       \\<br/>    [{ifNot:zekesSilo.visited:0:Silo:????}]    &#124;    [{ifNot:zekesFarmhouse.visited:0:Farmhouse:?????????}]<br/>              &#124;<br/>        [{ifNot:goblinTrail.visited:0:Goblin Trail:????????????}]<br/> {ifNot:goblinTrail.visited:0:             &#124;            <br/>        [{ifNot:goblinLair.visited:0:Goblin Lair:???????????}]<br/> {ifNot:goblinLair.visited:0:             &#124;<br/>   [{ifNot:insideTheGoblinLair.visited:0:Inside the Goblin Lair:??????????????????????}]}}}<br/><br/><br/>(* Starting location)<br/></code><br/>    </pre>")
     return world.SUCCESS
@@ -180,23 +180,60 @@ tp.text_processors.exit = function(arr,params){
 }
 
 world.enterRoom = function(exit) {
-    if (currentLocation.beforeEnter === undefined) {
-      return errormsg("This room, " + currentLocation.name + ", has no 'beforeEnter` function defined.  This is probably because it is not actually a room (it was not created with 'createRoom' and has not got the DEFAULT_ROOM template), but is an item. It is not clear what state the game will continue in.")
-    }
-    // Modified to disable all exit links when changing locations
-    itemLinks.disableAllLinks("exit-link");
-    // End of mod
-    settings.beforeEnter(exit)
-    if (currentLocation.visited === 0) {
-      if (currentLocation.roomSet) {
-        currentLocation.roomSetOrder = 1
-        for (const el of settings.roomSetList[currentLocation.roomSet]) {
-          if (el.visited) currentLocation.roomSetOrder++
-          if (el.name === currentLocation.name) el.visited = true
-        }
-      }
-      currentLocation.beforeFirstEnter(exit)
-    }
-    currentLocation.beforeEnter(exit)
-    world.enterRoomAfterScripts(exit);
+  if (currentLocation.beforeEnter === undefined) {
+    return errormsg("This room, " + currentLocation.name + ", has no 'beforeEnter` function defined.  This is probably because it is not actually a room (it was not created with 'createRoom' and has not got the DEFAULT_ROOM template), but is an item. It is not clear what state the game will continue in.")
   }
+  // Modified to disable all exit links when changing locations
+  itemLinks.disableAllLinks("exit-link");
+  // End of mod
+  settings.beforeEnter(exit)
+  if (currentLocation.visited === 0) {
+    if (currentLocation.roomSet) {
+      currentLocation.roomSetOrder = 1
+      for (const el of settings.roomSetList[currentLocation.roomSet]) {
+        if (el.visited) currentLocation.roomSetOrder++
+        if (el.name === currentLocation.name) el.visited = true
+      }
+    }
+    currentLocation.beforeFirstEnter(exit)
+  }
+  currentLocation.beforeEnter(exit)
+  world.enterRoomAfterScripts(exit);
+}
+
+
+parser.findInScope = function(s, scopes, cmdParams) {
+  parser.msg("Now matching: " + s)
+  console.log("Now matching: " + s)
+  // First handle IT etc.
+  for (const key in lang.pronouns) {
+    if (s === lang.pronouns[key].objective && parser.pronouns[lang.pronouns[key].objective]) {
+      // Modified to check scope
+      msg("(" + lang.getName(parser.pronouns[lang.pronouns[key].objective], {noLink:true, article:DEFINITE}) + ")", {}, 'parser')
+      s = lang.getName(parser.pronouns[lang.pronouns[key].objective], {noLink:true}).toLowerCase()
+      console.log("Now matching: " + s)
+      // End of mod
+    }
+  }
+      
+  for (let i = 0; i < scopes.length; i++) {
+    parser.msg("..Looking for a match for: " + s + " (scope " + (i + 1) + ")")
+    const objList = this.findInList(s, scopes[i], cmdParams);
+    if (objList.length > 0) {
+      return [objList, scopes.length - i];
+    }
+  }
+  return [[], 0];
+}
+
+lang.object_unknown_msg =function(name) {
+  for (const key in lang.pronouns) {
+    if (name === lang.pronouns[key].objective && parser.pronouns[lang.pronouns[key].objective]) {
+      name = lang.getName(parser.pronouns[lang.pronouns[key].objective])
+    }
+  }
+  //return "There doesn't seem to be anything you might call '" + name + "' here.";
+  return "You can't see that here."
+}
+
+  
