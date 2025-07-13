@@ -209,6 +209,7 @@ createItem("zekesFarmhouseEntrance", {
   listAlias:"Zeke's Farmhouse (place)",
   examine:"It's the entrance to the farmhouse.",
   otherSide:"zekesFarmhouse",
+  excludeFromAll:true,
   verbFunction:function(list) {
     list.splice("Examine")
     list.push("Go to")
@@ -221,6 +222,7 @@ createItem("zekesSiloEntrance", {
   listAlias:"Zeke's Silo (place)",
   examine:"It's the entrance to the silo.",
   otherSide:"zekesSilo",
+  excludeFromAll:true,
   verbFunction:function(list) {
     list.splice("Examine")
     list.push("Go to")
@@ -312,7 +314,11 @@ createRoom("goblinLair", {
   in:new Exit("insideTheGoblinLair", {scenery:true}),
   dests:[
     new Exit("insideTheGoblinLair")
-  ]
+  ],
+  up:new Exit('goblinLair', {scenery:true, simpleUse:function(char) {
+    msg (w.cliff.climbverb)
+    return false
+  }})
 })
 
 createItem("goblinGuard", NPC(false), {
@@ -361,6 +367,7 @@ createItem("insideTheGoblinLairEntrance", {
   listAlias:"Inside the Goblin Lair (place)",
   examine:"It's the entrance to the goblin lair.",
   otherSide:"insideTheGoblinLair",
+  excludeFromAll:true,
   verbFunction:function(list) {
     list.splice("Examine")
     list.push("Go to")
@@ -457,7 +464,11 @@ createRoom("phoenixMountainPass", {
   alias:"Phoenix Mountain Pass",
   desc:"The towering {nm:mountains} surround you on all sides but back to your {exit:west}.  Passage farther {exit:east} is remotely possible, should you be brave or foolhardy enough to try it.",
   west:new Exit("zekesFarm"),
-  east:new Exit("phoenixPeak")
+  east:new Exit("phoenixPeak"),
+  up:new Exit('phoenixMountainPass', {scenery:true, simpleUse:function(char) {
+    w.mountains.climbverb()
+    return false
+  }})
 })
 
 createItem("mountains", TAKEABLE(), {
@@ -539,6 +550,7 @@ createItem("event0",
     eventActive:true,
     eventScript:function() { 
       document.querySelector('#location').innerHTML = processText('{hereName}')
+      window.usingPronoun = false
      }
   }
 )

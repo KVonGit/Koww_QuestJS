@@ -64,10 +64,10 @@ commands.unshift(new Cmd('Climb', {
     }
     if (currentLocation.hasExit('climb_up') && currentLocation.hasExit('climb_down')) return failedmsg(lang.climb_ambiguity)
     if (currentLocation.hasExit('climb_up')) {
-      return currentLocation.climb_up.use(player, currentLocation.climb_up) ? world.SUCCESS : world.FAILURE
+      return currentLocation.climb_up.use(player, currentLocation.climb_up) ? world.SUCCESS : world.FAILED
     }
     if (currentLocation.hasExit('climb_down')) {
-      return currentLocation.climb_down.use(player, currentLocation.climb_down) ? world.SUCCESS : world.FAILURE
+      return currentLocation.climb_down.use(player, currentLocation.climb_down) ? world.SUCCESS : world.FAILED
     }
     return failedmsg(lang.cannot_climb)
   },
@@ -142,7 +142,7 @@ commands.unshift(new Cmd('Yes',{
   regex:/^y$|^yes$/,
   script:function(){
     msg("You sound very positive!")
-    return world.SUCCESS
+    return world.SUCCESS_NO_TURNSCRIPTS
   }
 }))
 
@@ -150,7 +150,7 @@ commands.unshift(new Cmd('No',{
   regex:/^no$/,
   script:function(){
     msg("You sound rather negative.")
-    return world.SUCCESS
+    return world.SUCCESS_NO_TURNSCRIPTS
   }
 }))
 
@@ -158,7 +158,7 @@ commands.unshift(new Cmd('KowwMap', {
   regex:/^map$|^show|view|display map$/,
   script:function(){
     msg ("<pre style=\"font-size:1em;line-height:1.2em;\"><code>=======<br/>&#124;  N  &#124;<br/>&#124; W&#124;E &#124;<br/>&#124;  S  &#124;<br/>=======<br/><br/> {ifNot:zekesFarm.visited:0:{ifNot:landOfTheNecroYaks.visited:0: [{ifNot:ambushPoint.visited:0:Deep in NecroYak Territory:????????????????????????}]<br/>              &#124;}<br/>    [{ifNot:landOfTheNecroYaks.visited:0:Land of the NecroYaks:?????????????????????}]<br/>              &#124;}<br/>[Chasm*]-[{ifNot:zekesFarm.visited:0:Zeke's Farm:??????????}]{ifNot:zekesFarm.visited:0:-[{ifNot:phoenixMountainPass.visited:0:Phoenix Mountain Pass:?????????????????????}]{ifNot:phoenixMountainPass.visited:0:-[{ifNot:phoenixPeak.visited:0:Phoenix Peak:????????????}]}}<br/>{ifNot:zekesFarm.visited:0:        /     &#124;       \\<br/>    [{ifNot:zekesSilo.visited:0:Silo:????}]    &#124;    [{ifNot:zekesFarmhouse.visited:0:Farmhouse:?????????}]<br/>              &#124;<br/>        [{ifNot:goblinTrail.visited:0:Goblin Trail:????????????}]<br/> {ifNot:goblinTrail.visited:0:             &#124;            <br/>        [{ifNot:goblinLair.visited:0:Goblin Lair:???????????}]<br/> {ifNot:goblinLair.visited:0:             &#124;<br/>   [{ifNot:insideTheGoblinLair.visited:0:Inside the Goblin Lair:??????????????????????}]}}}<br/><br/><br/>(* Starting location)<br/></code><br/>    </pre>")
-    return world.SUCCESS
+    return world.SUCCESS_NO_TURNSCRIPTS
   }
 }))
 
@@ -203,17 +203,17 @@ world.enterRoom = function(exit) {
   world.enterRoomAfterScripts(exit);
 }
 
+var usingPronoun = false
 
 parser.findInScope = function(s, scopes, cmdParams) {
   parser.msg("Now matching: " + s)
-  console.log("Now matching: " + s)
   // First handle IT etc.
   for (const key in lang.pronouns) {
     if (s === lang.pronouns[key].objective && parser.pronouns[lang.pronouns[key].objective]) {
       // Modified to check scope
-      msg("(" + lang.getName(parser.pronouns[lang.pronouns[key].objective], {noLink:true, article:DEFINITE}) + ")", {}, 'parser')
+      if (!window.usingPronoun) msg("(" + lang.getName(parser.pronouns[lang.pronouns[key].objective], {noLink:true, article:DEFINITE}) + ")", {}, 'parser')
+      window.usingPronoun = true
       s = lang.getName(parser.pronouns[lang.pronouns[key].objective], {noLink:true}).toLowerCase()
-      console.log("Now matching: " + s)
       // End of mod
     }
   }
@@ -234,8 +234,8 @@ lang.object_unknown_msg =function(name) {
       name = lang.getName(parser.pronouns[lang.pronouns[key].objective])
     }
   }
-  //return "There doesn't seem to be anything you might call '" + name + "' here.";
-  return "You can't see that here."
+  return "There doesn't seem to be anything you might call '" + name + "' here.";
+  //return "You can't see that here."
 }
 
 DEFAULT_ROOM.examine = function() {
