@@ -17,3 +17,30 @@
     font-size: inherit !important;
   }
 }
+
+#status-bar {
+  /*max-width: 600px;*/
+  width: 770px;
+  max-width: 770px;
+  display: block;
+  height: 30px;
+  position: fixed;
+  top: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.25em;
+  padding:2px;
+  color: #e1ebf2;
+  background: black;
+  z-index:100;
+}
+
+#location-bar {
+  padding-left: 4px;
+  padding-top: 4px;
+  font-family: Antonio, sans-serif;
+}
+
+#output {
+  padding-right: 13px;
+}

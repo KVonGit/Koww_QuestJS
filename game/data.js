@@ -544,12 +544,12 @@ createItem("resplendentMagnificentPhoenix", NPC(false), {
   },
 })
 
-createItem("kowwTurnscript", 
+createItem("locationBarTurnscript", 
   {
     eventPeriod:1,
     eventActive:true,
     eventScript:function() { 
-      document.querySelector('#location').innerHTML = processText('{hereName}')
+      document.querySelector('#location-bar').innerHTML = processText('{hereName}')
      }
   }
 )

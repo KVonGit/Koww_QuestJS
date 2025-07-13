@@ -24,14 +24,22 @@ settings.setup = function() {
       }
     }
   }
-  msg(`<div id="status" style="display: block; height: 30px; position: fixed; top: 0px; margin-left: auto; margin-right: auto; font-size: 1.25em; padding:2px; color: #e1ebf2; background: black; min-width: 600px; z-index:100;"><div id="location" style="padding-left:4px;padding-top:4px; font-family:Antonio, sans-serif;">Koww's Chasm</div></div>`)
+  msg(`<div id="status-bar"><div id="location-bar">Koww's Chasm</div></div>`)
   lang.go_successful = false
+  document.getElementById('panes').style.right = ((window.innerWidth - 770)/2) + 'px'
+  window.addEventListener('resize', function(event) {document.getElementById('panes').style.right = ((window.innerWidth - 770)/2) + 'px';}, true)
+}
+
+settings.afterLoad = function(){
+   msg(`<div id="status-bar"><div id="location-bar">{hereName}</div></div>`)
+  document.getElementById('panes').style.right = ((window.innerWidth - 770)/2) + 'px'
+  window.addEventListener('resize', function(event) {document.getElementById('panes').style.right = ((window.innerWidth - 770)/2) + 'px';}, true)
 }
 
 settings.statusPane = false
 
 settings.panes = "right"
-settings.panesCollapseAt = 953
+settings.panesCollapseAt = 958
 settings.hintInvisiClues = true
 settings.inventoryPane = [
   {name:'Items Held', alt:'itemsHeld', test:settings.isHeldNotWorn, getLoc:function() { return player.name; } },
@@ -42,5 +50,7 @@ settings.roomTemplate = [
   "You are in {color:red:{hereName}}.",
   "{hereDesc}"
 ]
+
+settings.oxfordComma = true
 
 settings.libraries.push('item-links')
