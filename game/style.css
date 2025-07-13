@@ -7,16 +7,7 @@
   color:inherit;
 }
 
-@media only screen and (max-width: 953px) 
-{
-  #main{
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-  }
-  .object-link{
-    font-size: inherit !important;
-  }
-}
+
 
 #status-bar {
   /*max-width: 600px;*/
@@ -43,4 +34,18 @@
 
 #output {
   padding-right: 13px;
+}
+
+@media only screen and (max-width: 953px) 
+{
+  #main{
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .object-link{
+    font-size: inherit !important;
+  }
+  #status-bar {
+    width:600px;
+  }
 }
