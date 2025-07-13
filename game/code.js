@@ -242,7 +242,7 @@ DEFAULT_ROOM.examine = function() {
   return '{hereDesc}'
 }
 
-/* FIX SCROLLING ON MOBILE /*
+/* FIX SCROLLING ON MOBILE */
 // This should be called after each turn to ensure we are at the end of the page and the text box has the focus
 function endTurnUI(update) {
   if (!currentLocation) return errormsg("currentLocation not set (" + (player ? 'but player is' : 'nor is player') + ")")
