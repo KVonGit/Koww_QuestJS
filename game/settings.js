@@ -6,7 +6,7 @@ settings.author = "Brian the Great"
 settings.version = "0.1.8"
 settings.thanks = ["Brian the Great","AlexWarren","cellarderecho","ThePix","DavyB","Pertex"]
 settings.warnings = "Puns, Mild Profanity"
-settings.playMode = "play"
+settings.playMode = "dev"
 
 settings.favicon = "favicon-32x32.png"
 
