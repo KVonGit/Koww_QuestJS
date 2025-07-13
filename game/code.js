@@ -161,3 +161,42 @@ commands.unshift(new Cmd('KowwMap', {
     return world.SUCCESS
   }
 }))
+
+tp.text_processors.exit = function(arr,params){
+  if(arr.length === 1){
+    return '<span class="exit-link" onclick="runCmd(\'' +
+        arr[0] +
+        "')\">" +
+        arr[0] +
+        "</span>"
+  }
+  else{
+    return '<span class="exit-link" onclick="runCmd(\'' +
+        arr[0] +
+        "')\">" +
+        arr[1] +
+        "</span>"
+  }
+}
+
+world.enterRoom = function(exit) {
+    if (currentLocation.beforeEnter === undefined) {
+      return errormsg("This room, " + currentLocation.name + ", has no 'beforeEnter` function defined.  This is probably because it is not actually a room (it was not created with 'createRoom' and has not got the DEFAULT_ROOM template), but is an item. It is not clear what state the game will continue in.")
+    }
+    // Modified to disable all exit links when changing locations
+    itemLinks.disableAllLinks("exit-link");
+    // End of mod
+    settings.beforeEnter(exit)
+    if (currentLocation.visited === 0) {
+      if (currentLocation.roomSet) {
+        currentLocation.roomSetOrder = 1
+        for (const el of settings.roomSetList[currentLocation.roomSet]) {
+          if (el.visited) currentLocation.roomSetOrder++
+          if (el.name === currentLocation.name) el.visited = true
+        }
+      }
+      currentLocation.beforeFirstEnter(exit)
+    }
+    currentLocation.beforeEnter(exit)
+    world.enterRoomAfterScripts(exit);
+  }
