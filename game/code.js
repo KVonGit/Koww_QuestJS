@@ -242,8 +242,101 @@ DEFAULT_ROOM.examine = function() {
   return '{hereDesc}'
 }
 
-io.scrollToEnd = function() {
-  if (settings.autoscroll) {
-    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+/* FIX SCROLLING ON MOBILE /*
+// This should be called after each turn to ensure we are at the end of the page and the text box has the focus
+function endTurnUI(update) {
+  if (!currentLocation) return errormsg("currentLocation not set (" + (player ? 'but player is' : 'nor is player') + ")")
+  if (settings.panes !== 'none' && update) {
+    // set the lang.exit_list
+    for (let exit of lang.exit_list) {
+      const el = document.querySelector('#exit-' + exit.name)
+      if (!el) continue
+      if (currentLocation.hasExit(exit.name, {excludeScenery:true}) || exit.type === 'nocmd') {
+        el.style.display = 'block'
+      }
+      else {
+        el.style.display = 'none'
+      }
+    }
+    io.updateStatus()
   }
+  for (let o of io.modulesToUpdate) {
+    o.update(update)
+  }
+  io.updateUIItems()
+  if (settings.updateCustomUI) settings.updateCustomUI()
+
+  io.scrollToEnd()
+  // give focus to command bar
+  // Modified this last line to add the setTimeout for mobile browsers
+  if (settings.textInput) { setTimeout(function(){document.querySelector('#textbox').focus();},150) }
+}
+
+io.outputFromQueue = function() {
+  if (io.outputSuspended) return
+  if (io.outputQueue.length === 0) {
+    if (!io.disableTextFunction) io.enable()
+    return
+  }
+  
+  //if (settings.textInput) document.querySelector('#input').style.display = 'block'
+  const data = io.outputQueue.shift()
+  if (data.action === 'wait' && (!settings.disableWaitInDevMode || settings.playMode !== 'dev')) {
+    io.disable()
+    io.outputSuspended = true
+    //if (settings.textInput) document.querySelector('#input').style.display = 'none'
+    data.tag = 'p'
+    data.onclick="io.unpause()"
+    if (!data.text) data.text = lang.click_to_continue
+    io.print(data)
+  }
+  if (data.action === 'delay' && (!settings.disableWaitInDevMode || settings.playMode !== 'dev')) {
+    log('here')
+    io.disable()
+    io.outputSuspended = true
+    if (data.text) {
+      data.tag = 'p'
+      io.print(data)
+    }
+    setTimeout(io.unpause, data.delay * 1000)
+  }
+  if (data.action === 'output') {
+    const html = io.print(data)
+    io.speak(data.text);
+    saveLoad.transcriptAppend(data);
+    io.outputFromQueue()
+  }
+  if (data.action === 'func') {
+    if (data.func()) io.outputFromQueue()
+  }
+  if (data.action === 'effect') {
+    io.disable()
+    // need a way to handle spoken and transcript here
+    data.effect(data)
+  }
+  if (data.action === 'clear') {
+    document.querySelector('#output').textContent = "";
+    io.outputFromQueue()
+  }
+  if (data.action === 'sound') {
+    if (!settings.silent) {
+      const el = document.getElementById(data.name)
+      el.currentTime = 0
+      el.play()
+    }
+  }
+  if (data.action === 'ambient') {
+    for (let el of document.getElementsByTagName('audio')) el.pause()
+    if (!settings.silent && data.name) {
+      const el = document.getElementById(data.name)
+      el.currentTime = 0
+      el.loop = true
+      el.play()
+      if (data.volume) el.volume = data.volume / 10
+    }
+  }
+  
+  io.scrollToEnd()
+  // Modified this last line to add the setTimeout for mobile browsers
+  if (settings.textInput) { setTimeout(function(){document.querySelector('#textbox').focus();},150) }
 }
