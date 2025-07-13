@@ -241,3 +241,9 @@ lang.object_unknown_msg =function(name) {
 DEFAULT_ROOM.examine = function() {
   return '{hereDesc}'
 }
+
+io.scrollToEnd = function() {
+  if (settings.autoscroll) {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+  }
+}
