@@ -3,7 +3,7 @@
 
 settings.title = "The Adventures of Koww the Magician (QuestJS port)"
 settings.author = "Brian the Great"
-settings.version = "0.2.8"
+settings.version = "0.2.9"
 settings.thanks = ["Brian the Great","AlexWarren","cellarderecho","ThePix","DavyB","Pertex"]
 settings.warnings = "Puns, Mild Profanity"
 settings.playMode = "play"
@@ -23,6 +23,17 @@ settings.setup = function() {
         ex.dir = 'to ' + (ex.dirAlias ? ex.dirAlias : dest.alias)
       }
     }
+    document.addEventListener("click", function (e) {
+      // If click is not inside any .dropdown-content or a dropdown trigger
+      const isDropdown = e.target.closest(".dropdown-content");
+      const isTrigger = e.target.closest(".dropdown");
+
+      if (!isDropdown && !isTrigger) {
+        for (const el of document.querySelectorAll(".dropdown-content")) {
+          el.style.display = "none";
+        }
+      }
+    });
   }
   const statusEl = document.createElement('div')
   statusEl.id = 'status-bar'

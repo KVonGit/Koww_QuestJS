@@ -12,7 +12,11 @@ createItem("milk", {
   defArticle:"your",
   indefArticle:"your",
   synonyms:["my milk"],
-  drop:"Why would you do that?  Awful waste of milk."
+  drop:"Why would you do that?  Awful waste of milk.",
+    verbFunction:function(list) {
+    list.splice("Examine")
+    list.push("Give")
+  }
 })
 
 createRoom("possitems")
@@ -41,6 +45,10 @@ createItem("pitchfork", {
       msg ("You can't use it that way.")
     }
     return true
+  },
+  verbFunction:function(list) {
+    list.splice("Examine")
+    list.push("Use")
   }
 })
 
@@ -48,13 +56,21 @@ createItem("kowwNothing", {
   loc:"possitems",
   alias:"nothing",
   examine:"You see nothing.",
-  getDisplayName:function(){return "nothing"}
+  getDisplayName:function(){return "nothing"},
+  verbFunction:function(list) {
+    list.splice("Examine")
+    list.push("Use")
+  }
 })
 
 createItem("jadeStatuette", {
   alias:"jade statuette",
   loc:"possitems",
-  examine:"An ugly statuette, made of jade."
+  examine:"An ugly statuette, made of jade.",
+  verbFunction:function(list) {
+    list.splice("Examine")
+    list.push("Give")
+  }
 })
 
 createItem("something", {
@@ -78,19 +94,30 @@ createItem("something", {
       return true
     }
     return false
+  },
+  verbFunction:function(list) {
+    list.splice("Examine")
+    list.push("Use")
   }
 })
 
 createItem("duckTurd", {
   loc:"possitems",
   alias:"duck turd",
-  examine:"A foul dropping."
+  examine:"A foul dropping.",
+  verbFunction:function(list) {
+    list.splice("Examine")
+    list.push("Give")
+  }
 })
 
 createItem("goblinSpit", {
   loc:"possitems",
   alias:"goblin spit",
-  examine:"Yuck... It's chunky!"
+  examine:"Yuck... It's chunky!",
+  verbFunction:function(list) {
+    list.splice("Examine")
+  }
 })
 
 createItem("grapplingHook", {
@@ -114,6 +141,10 @@ createItem("grapplingHook", {
       return true
     }
     return false
+  },
+  verbFunction:function(list) {
+    list.splice("Examine")
+    list.push("Use")
   }
 })
 
@@ -137,6 +168,10 @@ createItem("flyScroll", {
       return true
     }
     return false
+  },
+  verbFunction:function(list) {
+    list.splice("Examine")
+    list.push("Give")
   }
 })
 
@@ -151,6 +186,10 @@ createItem("purplePaint", {
       return true
     }
     return false
+  },
+  verbFunction:function(list) {
+    list.splice("Examine")
+    list.push("Use")
   }
 })
 
@@ -162,7 +201,7 @@ createRoom("kowwsChasm", {
 
 createItem("chasm", TAKEABLE(), {
   loc:"kowwsChasm",
-  examine:"That's the chasm you simply MUST cross!  Surely the only way to cross it is to FLY!",
+  examine:"That's the chasm you simply MUST cross!  Surely the only way to cross it is to {exit:fly:FLY}!",
   take:"Don't worry, the men in the white coats will soon be here to deal with you."
 })
 
@@ -170,7 +209,11 @@ createItem("sign", TAKEABLE(), {
   examine:"It reads: \"{i:Got milk?  Come to Farmer Zeke's mag-NIFicent silo!}\"",
   read:"It reads: \"{i:Got milk?  Come to Farmer Zeke's mag-NIFicent silo!}\"",
   take:"You yank the sign out of the ground and try to fit it in your Koww-pack.  But it just doesn't fit.  Frustrated, you put it back.",
-  loc:"kowwsChasm"
+  loc:"kowwsChasm",
+  verbFunction:function(list) {
+    list.splice("Examine")
+    list.push("Read")
+  }
 })
 
 createRoom("zekesFarm", {
@@ -206,7 +249,7 @@ createItem("pond", TAKEABLE(),  {
 createItem("zekesFarmhouseEntrance", {
   loc:"zekesFarm",
   alias:"Zeke's farmhouse",
-  listAlias:"Zeke's Farmhouse (place)",
+  listAlias:"<img src=\"assets/icons/houseicon.png\"> Zeke's Farmhouse",
   examine:"It's the entrance to the farmhouse.",
   otherSide:"zekesFarmhouse",
   excludeFromAll:true,
@@ -219,7 +262,7 @@ createItem("zekesFarmhouseEntrance", {
 createItem("zekesSiloEntrance", {
   loc:"zekesFarm",
   alias:"Zeke's silo",
-  listAlias:"Zeke's Silo (place)",
+  listAlias:"<img src=\"assets/icons/houseicon.png\"> Zeke's Silo",
   examine:"It's the entrance to the silo.",
   otherSide:"zekesSilo",
   excludeFromAll:true,
@@ -269,7 +312,7 @@ createItem("Zeke", NPC(false), {
   loc:"zekesSilo",
   listAlias:"Zeke (character)",
   examine:"He's wearing a straw hat and at least one of his teeth is rotting away, but he seems pleased as punch that you've arrived.",
-  talkto:"\"Hey there, good buddy! Say, bein' a wizard an' all, couldja find it in yer heart to gimme some magic milk?  I'm all out!\"",
+  talkto:"\"Hey there, good buddy!{ifIs:milk:loc:player: Say, bein' a wizard an' all, couldja find it in yer heart to gimme some magic milk?  I'm all out!}\"",
   attack:"You may be an evil sorcerer, but at least you're an ETHICAL evil sorcerer.  No killing allowed!  Especially not of idiots.  They don't know they're idiots.",
   receiveItems:[
     {
@@ -324,7 +367,7 @@ createRoom("goblinLair", {
 createItem("goblinGuard", NPC(false), {
   loc:"goblinLair",
   alias:"Goblin guard",
-  listAlias:"Goblin guard (character)",
+  listAlias:"Goblin guard",
   defArticle:"the",
   indefArticle:"the",
   examine:"It's very ugly, like most of its kind.  Don't get too close; you could faint from the smell.",
@@ -364,7 +407,7 @@ createItem("cliff", TAKEABLE(), {
 createItem("insideTheGoblinLairEntrance", {
   loc:"goblinLair",
   alias:"Inside the Goblin Lair",
-  listAlias:"Inside the Goblin Lair (place)",
+  listAlias:"<img src=\"assets/icons/houseicon.png\"> Inside the Goblin Lair",
   examine:"It's the entrance to the goblin lair.",
   otherSide:"insideTheGoblinLair",
   excludeFromAll:true,
@@ -383,7 +426,7 @@ createRoom("insideTheGoblinLair", {
 createItem("goblinKing", NPC(false), {
   loc:"insideTheGoblinLair",
   alias:"Goblin King",
-  listAlias:"Goblin King (character)",
+  listAlias:"Goblin King",
   defArticle:"the",
   indefArticle:"the",
   examine:"An officious-looking, double-chinned goblin monarch sits royally atop a throne of deer hide.",
@@ -442,7 +485,7 @@ createItem("sign1", TAKEABLE(), {
 
 createRoom("ambushPoint", {
   alias:"Deep in NecroYak Territory",
-  desc:"A cliff face blocks your way here.  It's steep -- you can't climb.  If you want to continue, you'll have to search the face.<br/><br/>You can go {exit:south}.",
+  desc:"A cliff face blocks your way here.  It's steep -- you can't climb.  If you want to continue, you'll have to {exit:search} the face.<br/><br/>You can go {exit:south}.",
   south:new Exit("landOfTheNecroYaks"),
   searchable:true,
   search:function(){
@@ -501,7 +544,7 @@ createRoom("phoenixPeak", {
 createItem("resplendentMagnificentPhoenix", NPC(false), {
   loc:"phoenixPeak",
   alias:"Resplendent Magnificent Phoenix",
-  listAlias:"Resplendent Magnificent Phoenix (character)",
+  listAlias:"Resplendent Magnificent Phoenix",
   defArticle:"the",
   indefArticle:"the",
   examine:"The Resplendent Magnificent Phoenix's visage is so brilliant that it hurts to look at it.",
