@@ -10,9 +10,9 @@ new Cmd('SearchLocation', {
       w[player.loc].search();
     }
     else{
-      msg("Waste of a good turn.");
+      msg("Your search reveals nothing.");
     }
-    return true;
+    return world.SUCCESS;
   },
 })
 
@@ -49,9 +49,7 @@ commands.unshift(new Cmd('Climb', {
   script:function() {
     if (player.loc == "phoenixMountainPass"){
       if (w.grapplingHook.loc == "player"){
-        msg("On top of the mountain, you find a bunch of purple paint, which you take.  After descending again, you ditch your grappling hook.")
-        w.grapplingHook.loc = false
-        w.purplePaint.moveToFrom({char:player, item:w.purplePaint}, "char", "possitems")
+        return climbThem()
       }
       else{
         msg("Those particular mountains are too steep.")
@@ -79,9 +77,7 @@ commands.unshift(new Cmd('Fly', {
   script:function(){
     if(w.flyScroll.loc == "player"){
       if (player.loc === "kowwsChasm"){
-       msg("You fly up and over the chasm!<br/><br/><br/>Congratulations, you have found out that you were better off where you started anyway.  The grass here is brown and crackly.  Too bad!  And... OH NO!  Now you're trapped here, alone with the NecroYaks!  Stay tuned for \"The Adventures of Koww the Magician II -- Escape from the NecroYaks!\"<br/><br/>")
-       w.flyScroll.loc = false
-       io.finish()
+       return playerWin()
       }
       else{
         msg ("Not here, not now.")
@@ -346,4 +342,143 @@ io.outputFromQueue = function() {
   io.scrollToEnd()
   // Modified this last line to add the setTimeout for mobile browsers
   if (settings.textInput) { setTimeout(function(){document.querySelector('#textbox').focus();},150) }
+}
+
+function pitchproc(){
+  msg("You stab the pitchfork into the haystack.  Lo and behold, the haystack falls down into a hole in the ground, along with the pitchfork!  Inside the hole is a jade statuette, which you take.")
+  w.pitchfork.loc = false
+  w.jadeStatuette.moveToFrom({char:player, item:w.jadeStatuette}, "char", "possitems")
+  player.score += 40
+  msg ("Your score has increased by 40.", {}, 'parser')
+  return world.SUCCESS
+}
+
+function getDuckTurd(){
+  if (player.loc == 'zekesFarm'){
+    msg("You throw the something into the pond.  The ducks swarm around it in curiosity.  You take the opportunity to grab a duck turd without being noticed!")
+    w.something.loc = false
+    w.duckTurd.moveToFrom({char:player, item:w.duckTurd}, "char", "possitems")
+    player.score += 40
+    msg ("Your score has increased by 40.", {}, 'parser')
+    return world.SUCCESS
+  }
+  msg ("Not here, not now.")
+  return world.FAILED
+}
+
+function climbThem(){
+  msg("On top of the mountain, you find a bunch of purple paint, which you take.  After descending again, you ditch your grappling hook.")
+  w.grapplingHook.loc = false
+  w.purplePaint.moveToFrom({char:player, item:w.purplePaint}, "char", "possitems")
+  player.score += 40
+  msg ("Your score has increased by 40.", {}, 'parser')
+  return world.SUCCESS
+}
+
+function playerWin(){
+  msg("You fucking fly up and over the chasm!<br/><br/><br/>Congratulations, you have found out that you were better off where you started anyway.  The grass here is brown and crackly.  Too bad!  And... OH NO!  Now you're trapped here, alone with the NecroYaks!  Stay tuned for \"The Adventures of Koww the Magician II -- Escape from the NecroYaks!\"<br/><br/>")
+  w.flyScroll.loc = false
+  player.score += 19
+  msg ("Your score has increased by 19.", {}, 'parser')
+  let rank
+  if (player.score < 100) {
+    rank = "BABY KOWW"
+  }
+  else if (player.score < 200) {
+    rank = "HALF-FAST KALF"
+  }
+  else if (player.score < 300) {
+    rank = "MOO-STLY HARMLESS"
+  }
+  else if (player.score < 420) {
+    rank = "MAGICIAN"
+  }
+  else {
+    rank = "GRAND MOO-STER WIZARD"
+  }
+  msg("<br/><br/>In that game, you scored {show:player:score} of a possible {show:player:maxScore}, in {show:game:turnCount} turn{ifIs:game:turnCount:1::s}, granting you the rank: {b:" + rank + "}.", {game:game})
+  io.finish()
+  return world.SUCCESS
+}
+
+function phoenixProc(){
+  msg("\"Thank you; you have found my wing feather.  In the wrong hands, that could have been very dangerous.  I will give you this 'fly' scroll to compensate you for your hard work.  Use the scroll to fly, but it will only work once.\"")
+  w.wingFeather.loc = false
+  w.flyScroll.moveToFrom({char:player, item:w.flyScroll}, "char", "possitems")
+  player.score += 40
+  msg ("Your score has increased by 40.", {}, 'parser')
+  return world.SUCCESS
+}
+
+function phoenixKill(){
+  msg ("\"Then give it to me quickly!  What..... You don't have my wing feather at all, do you?  You shammer.  I was going to dismiss you without hurting you, but I'm afraid now I'll have to kill you.\"")
+  msg ("The Resplendent Magnificent Phoenix bats you with one claw.  You roll back down the mountainside, finally coming to a complete stop looking very much like a well-done steak.")
+  msg("<br/><br/>Idiot.  You die.  HA HA HA HA HA!")
+  io.finish()
+  return world.SUCCESS
+}
+
+findCmd('MetaScore').script = function(){
+  let rank
+  if (player.score < 100) {
+    rank = "BABY KOWW"
+  }
+  else if (player.score < 200) {
+    rank = "HALF-FAST KALF"
+  }
+  else if (player.score < 300) {
+    rank = "MOO-STLY HARMLESS"
+  }
+  else if (player.score < 420) {
+    rank = "MAGICIAN"
+  }
+  else {
+    rank = "GRAND MOO-STER WIZARD"
+  }
+  msg ("Your score is {show:player:score} of a possible {show:player:maxScore}, in {show:game:turnCount} turn{ifIs:game:turnCount:1::s}, granting you the rank: {b:" + rank + "}.", {game:game})
+}
+
+function phoenixSpeak(){
+  msg("\"The Resplendent Magnificent Phoenix demands to know {i:why} such a weakling as you has come here!  If you do not have my wing feather with you, I'm afraid I must ask you to leave {i:immediately!}  Now, do you have my wing feather or not -- {b:Yes} or {b:No}?\"")
+  askText("", function(result) {
+    if (result.match(lang.yes_regex)) {
+      if (w.wingFeather.loc == "player"){
+        return phoenixProc()
+      }
+      else{
+        return phoenixKill()
+      }
+    }
+    else if (result.match(lang.no_regex)){
+      msg ("\"Then leave me immediately, as I do not appreciate company.\"")
+      return world.SUCCESS
+    }
+    else {
+      setTimeout(function(){phoenixDemands()},1)
+    }
+  })
+}
+
+lang.no_regex = /^no|n$/i;
+
+function phoenixDemands(){
+  msg("\"I asked you a question!!!  Please answer {b:Yes} or {b:No} or so help me, I will not let you leave here alive!\"")
+  askText("", function(result) {
+    console.log('demands:',result)
+    if (result.match(lang.yes_regex)) {
+      if (w.wingFeather.loc == "player"){
+        return phoenixProc()
+      }
+      else{
+        return phoenixKill()
+      }
+    }
+    else if (result.match(lang.no_regex)){
+      msg ("\"Then leave me immediately, as I do not appreciate company.\"")
+      return world.SUCCESS
+    }
+    else {
+      setTimeout(function(){phoenixDemands()},100)
+    }
+  })
 }

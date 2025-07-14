@@ -4,6 +4,8 @@ createItem("player", PLAYER(), {
     msg ("You are Koww the Magician!")
   },
   loc:"kowwsChasm",
+  score:0,
+  maxScore: 420
 })
 
 createItem("milk", {
@@ -25,26 +27,10 @@ createItem("pitchfork", {
   loc:"possitems",
   examine:"A sharp looking tool!",
   use:function(){
-    if (player.loc === "zekesFarm"){
-      msg("You stab the pitchfork into the haystack.  Lo and behold, the haystack falls down into a hole in the ground, along with the pitchfork!  Inside the hole is a jade statuette, which you take.")
-      w.pitchfork.loc = false
-      w.jadeStatuette.moveToFrom({char:player, item:w.jadeStatuette}, "char", "possitems")
-    }
-    else{
-      msg ("Not here, not now.")
-    }
-    return true
+    return pitchproc()
   },
   useWith:function(char,obj){
-    if (obj === w.haystack){
-      msg("You stab the pitchfork into the haystack.  Lo and behold, the haystack falls down into a hole in the ground, along with the pitchfork!  Inside the hole is a jade statuette, which you take.")
-      w.pitchfork.loc = false
-      w.jadeStatuette.moveToFrom({char:player, item:w.jadeStatuette}, "char", "possitems")
-    }
-    else{
-      msg ("You can't use it that way.")
-    }
-    return true
+    return pitchproc()
   },
   verbFunction:function(list) {
     list.splice("Examine")
@@ -59,7 +45,7 @@ createItem("kowwNothing", {
   getDisplayName:function(){return "nothing"},
   verbFunction:function(list) {
     list.splice("Examine")
-    list.push("Use")
+    list.push("Give")
   }
 })
 
@@ -79,21 +65,17 @@ createItem("something", {
   getDisplayName:function(){return "something"},
   use:function(){
     if (player.loc === "zekesFarm"){
-      msg("You throw the something into the pond.  The ducks swarm around it in curiosity.  You take the opportunity to grab a duck turd without being noticed!")
-      w.something.loc = false
-      w.duckTurd.moveToFrom({char:player, item:w.duckTurd}, "char", "possitems")
-      return true
+      return getDuckTurd()
     }
-    return false
+    msg ("Not here, not now.")
+    return world.FAILED
   },
   useWith:function(char,obj){
-    if (obj === w.pond){
-      msg("You throw the something into the pond.  The ducks swarm around it in curiosity.  You take the opportunity to grab a duck turd without being noticed!")
-      w.something.loc = false
-      w.duckTurd.moveToFrom({char:player, item:w.duckTurd}, "char", "possitems")
-      return true
+    if (obj === w.pond) {
+      return getDuckTurd()
     }
-    return false
+    msg ("No obvious way to use it.", {}, 'parser')
+    return world.FAILED
   },
   verbFunction:function(list) {
     list.splice("Examine")
@@ -126,21 +108,17 @@ createItem("grapplingHook", {
   examine:"It looks strong enough to support a cow!",
   use:function(){
     if (player.loc === "phoenixMountainPass"){
-      msg("On top of the mountain, you find a bunch of purple paint, which you take.  After descending again, you ditch your grappling hook.")
-      w.grapplingHook.loc = false
-      w.purplePaint.moveToFrom({char:player, item:w.purplePaint}, "char", "possitems")
-      return true
+      return climbThem()
     }
-    return false
+    msg ("Not here, not now.")
+    return world.FAILED
   },
   useWith:function(char,obj){
     if (obj === w.mountains){
-      msg("On top of the mountain, you find a bunch of purple paint, which you take.  After descending again, you ditch your grappling hook.")
-      w.grapplingHook.loc = false
-      w.purplePaint.moveToFrom({char:player, item:w.purplePaint}, "char", "possitems")
-      return true
+      return climbThem()
     }
-    return false
+    msg ("No obvious way to use it.", {}, 'parser')
+    return world.FAILED
   },
   verbFunction:function(list) {
     list.splice("Examine")
@@ -151,7 +129,11 @@ createItem("grapplingHook", {
 createItem("wingFeather", {
   loc:"possitems",
   alias:"wing feather",
-  examine:"A wing feather from a Phoenix."
+  examine:"A wing feather from a Phoenix.",
+  verbFunction:function(list) {
+    list.splice("Examine")
+    list.push("Give")
+  }
 })
 
 createItem("flyScroll", {
@@ -162,16 +144,14 @@ createItem("flyScroll", {
   defArticle:"the",
   use:function(){
     if (player.loc === "kowwsChasm"){
-      msg("You fly up and over the chasm!<br/><br/><br/>Congratulations, you have found out that you were better off where you started anyway.  The grass here is brown and crackly.  Too bad!  And... OH NO!  Now you're trapped here, alone with the NecroYaks!  Stay tuned for \"The Adventures of Koww the Magician II -- Escape from the NecroYaks!\"<br/><br/>")
-      w.flyScroll.loc = false
-      io.finish()
-      return true
+      return playerWin()
     }
-    return false
+    msg ("Not here, not now.")
+    return world.FAILED
   },
   verbFunction:function(list) {
     list.splice("Examine")
-    list.push("Give")
+    list.push("Use")
   }
 })
 
@@ -183,9 +163,12 @@ createItem("purplePaint", {
     if (player.loc === "zekesSilo"){
       msg("You spread the purple paint on yourself.  Suddenly Farmer Zeke bursts into song!<br/><br/>\"{i:I never saw a purple cow, and I never hope to see one; but I can tell you anyhow, I'd rather see than be one!}\"<br/><br/>Wonderful!  You have just activated the scenario's secret feature!  That's it.  Return to your home.  There's nothing more to do here.")
       w.purplePaint.loc = false
-      return true
+      player.score += 1
+       msg ("Your score has increased by 1.", {}, 'parser')
+      return world.SUCCESS
     }
-    return false
+    msg ("Not here, not now.")
+    return world.FAILED
   },
   verbFunction:function(list) {
     list.splice("Examine")
@@ -296,6 +279,8 @@ createItem("treasureChest", CONTAINER(true), {
       w.kowwNothing.moveToFrom({char:player, item:w.kowwNothing}, "char", "possitems")
       w.treasureChest.loc = false
       w.table.loc = false
+      player.score += 40
+      msg ("Your score has increased by 40.", {}, 'parser')
       return world.SUCCESS
     }
   }
@@ -321,6 +306,8 @@ createItem("Zeke", NPC(false), {
         msg("\"Well, thanks a lot, good buddy!  Well, tell ya what, why don't I give ya this here pitchfork ta comp'n'sate ya fer yer milk.\"")
         w.milk.loc = false
         w.pitchfork.moveToFrom({char:player, item:w.pitchfork}, "char", "possitems")
+        player.score += 40
+        msg ("Your score has increased by 40.", {}, 'parser')
         return world.SUCCESS
       }
     },
@@ -360,7 +347,7 @@ createRoom("goblinLair", {
   ],
   up:new Exit('goblinLair', {scenery:true, simpleUse:function(char) {
     msg (w.cliff.climbverb)
-    return false
+    return world.FAILED
   }})
 })
 
@@ -379,6 +366,8 @@ createItem("goblinGuard", NPC(false), {
         msg("\"Ooooo!  Nuthing!  Jus wut I all ways want'd!  Inn ex chaynge, I giv yu summ thing!\"")
         w.kowwNothing.loc = false
         w.something.moveToFrom({char:player, item:w.something}, "char", "possitems")
+        player.score += 40
+        msg ("Your score has increased by 40.", {}, 'parser')
         return world.SUCCESS
       }
     },
@@ -398,8 +387,8 @@ createItem("cliff", TAKEABLE(), {
   examine:"It's a cliff; you could {command:climb it}, but it might be a difficult climb.",
   take:"If you want to {command:climb the cliff}, say so!",
   climbverb:"After a difficult climb, you reach the top.  You're very pleased with yourself.  Unfortunately, the ledge crumbles beneath you, and you plummet back to the ground.",
-    pronouns:lang.pronouns.plural,
-    verbFunction:function(list) {
+  pronouns:lang.pronouns.plural,
+  verbFunction:function(list) {
     list.push("Climb")
   },
 })
@@ -438,6 +427,8 @@ createItem("goblinKing", NPC(false), {
         msg("\"Ooooo!  You find goblinn lost statyoo!  We giv yu wun jar of spit!\"")
         w.jadeStatuette.loc = false
         w.goblinSpit.moveToFrom({char:player, item:w.goblinSpit}, "char", "possitems")
+        player.score += 40
+        msg ("Your score has increased by 40.", {}, 'parser')
         return world.SUCCESS
       }
     },
@@ -447,6 +438,8 @@ createItem("goblinKing", NPC(false), {
         msg("\"Ooooo!  GIMME GIMME GIMME!  Duck turd favorite goblin food!  We giv yu grapple hook!\"")
         w.duckTurd.loc = false
         w.grapplingHook.moveToFrom({char:player, item:w.grapplingHook}, "char", "possitems")
+        player.score += 40
+        msg ("Your score has increased by 40.", {}, 'parser')
         return world.SUCCESS
       }
     },
@@ -493,14 +486,26 @@ createRoom("ambushPoint", {
       msg("The NecroYaks jump out and search you for acid.  They find your goblin spit, take it, and run off.  But one of them drops a phoenix feather, and you scoop it up unnoticed.  By the way, there's no way to go farther this way unless you're a yak.")
       w.goblinSpit.loc = false
       w.wingFeather.moveToFrom({char:player, item:w.wingFeather}, "char", "possitems")
-      return true
+      player.score += 40
+      msg ("Your score has increased by 40.", {}, 'parser')
+      return world.SUCCESS
     }
     else{
       msg("The NecroYaks recognize you as a cow, then jump out and kill you.<br/><br/>Idiot.  You die.  HA HA HA HA HA!<br/>")
       io.finish()
-      return true
+      return world.SUCCESS
     }
   }
+})
+
+createItem('cliffFace', {
+  loc:"ambushPoint",
+  alias:'cliff face',
+  scenery:true,
+  take:"Nope, but you could try searching it instead.",
+  climbverb:"It's steep -- you can't climb.",
+  search:function(){return findCmd('SearchLocation').script()},
+  examine:"It's steep -- you can't climb."
 })
 
 createRoom("phoenixMountainPass", {
@@ -510,7 +515,7 @@ createRoom("phoenixMountainPass", {
   east:new Exit("phoenixPeak"),
   up:new Exit('phoenixMountainPass', {scenery:true, simpleUse:function(char) {
     w.mountains.climbverb()
-    return false
+    return world.FAILED
   }})
 })
 
@@ -523,6 +528,8 @@ createItem("mountains", TAKEABLE(), {
       msg("On top of the mountain, you find a bunch of purple paint, which you take.  After descending again, you ditch your grappling hook.")
       w.grapplingHook.loc = false
       w.purplePaint.moveToFrom({char:player, item:w.purplePaint}, "char", "possitems")
+      player.score += 40
+      msg ("Your score has increased by 40.", {}, 'parser')
     }
     else{
       msg("Those particular mountains are too steep.")
@@ -549,36 +556,13 @@ createItem("resplendentMagnificentPhoenix", NPC(false), {
   indefArticle:"the",
   examine:"The Resplendent Magnificent Phoenix's visage is so brilliant that it hurts to look at it.",
   talkto:function(){
-    msg("\"The Resplendent Magnificent Phoenix demands to know {i:why} such a weakling as you has come here!  If you do not have my wing feather with you, I'm afraid I must ask you to leave {i:immediately!}  Now, do you have my wing feather or not -- Yes or No?\""),
-    showMenu("", ["Yes","No"], function(result){
-      if (result === "Yes"){
-        if (w.wingFeather.loc == "player"){
-          msg("\"Thank you; you have found my wing feather.  In the wrong hands, that could have been very dangerous.  I will give you this 'fly' scroll to compensate you for your hard work.  Use the scroll to fly, but it will only work once.\"")
-          w.wingFeather.loc = false
-          w.flyScroll.moveToFrom({char:player, item:w.flyScroll}, "char", "possitems")
-        }
-        else{
-          msg ("\"Then give it to me quickly!  What..... You don't have my wing feather at all, do you?  You shammer.  I was going to dismiss you without hurting you, but I'm afraid now I'll have to kill you.\"")
-          msg ("The Resplendent Magnificent Phoenix bats you with one claw.  You roll back down the mountainside, finally coming to a complete stop looking very much like a well-done steak.")
-          msg("<br/><br/>Idiot.  You die.  HA HA HA HA HA!")
-          io.finish()
-        }
-      }
-      else if (result === "No"){
-        msg ("\"Then leave me immediately, as I do not appreciate company.\"")
-      }
-      else {
-        msg ("Something went wrong!")
-      }
-    })},
+    return phoenixSpeak()
+  },
   receiveItems:[
     {
       item:w.wingFeather,
       script:function(){
-        msg("\"Thank you; you have found my wing feather.  In the wrong hands, that could have been very dangerous.  I will give you this 'fly' scroll to compensate you for your hard work.  Use the scroll to fly, but it will only work once.\"")
-        w.wingFeather.loc = false
-        w.flyScroll.moveToFrom({char:player, item:w.flyScroll}, "char", "possitems")
-        return world.SUCCESS
+        return phoenixProc()
       }
     }
   ],

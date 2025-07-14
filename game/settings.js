@@ -3,7 +3,8 @@
 
 settings.title = "The Adventures of Koww the Magician (QuestJS port)"
 settings.author = "Brian the Great"
-settings.version = "0.2.9"
+settings.version = "0.3"
+settings.ifid = "BBD5D89-78A2-4278-A85E-BC291A41FFE8"
 settings.thanks = ["Brian the Great","AlexWarren","cellarderecho","ThePix","DavyB","Pertex"]
 settings.warnings = "Puns, Mild Profanity"
 settings.playMode = "play"
@@ -42,15 +43,22 @@ settings.setup = function() {
   lang.go_successful = false
   document.getElementById('panes').style.right = ((window.innerWidth - 770)/2) + 'px'
   window.addEventListener('resize', function(event) {document.getElementById('panes').style.right = ((window.innerWidth - 770)/2) + 'px';}, true)
+  document.querySelector('#exit-Help').children[0].className = document.querySelector('#exit-Help').children[0].className.replace('info','question')
 }
 
 settings.afterLoad = function(){
    msg(`<div id="status-bar"><div id="location-bar">{hereName}</div></div>`)
   document.getElementById('panes').style.right = ((window.innerWidth - 770)/2) + 'px'
   window.addEventListener('resize', function(event) {document.getElementById('panes').style.right = ((window.innerWidth - 770)/2) + 'px';}, true)
+  document.querySelector('#exit-Help').children[0].className = document.querySelector('#exit-Help').children[0].className.replace('info','question')  
 }
 
-settings.statusPane = false
+settings.statusWidthLeft = 120,    // How wide the left column is in the status pane
+settings.statusWidthRight = 40,    // How wide the right column is in the status pane
+settings.status =[
+  function() { return "<td>Moves:</td><td>" + game.turnCount + "</td>"; },
+  function() { return "<td>Score:</td><td>" + player.score + "</td>"; }
+]
 
 settings.panes = "right"
 settings.panesCollapseAt = 958
