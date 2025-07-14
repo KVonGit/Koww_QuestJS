@@ -490,3 +490,50 @@ findCmd('PutIn').script = function(objects) {
   }
   return handleInOutContainer(player, objects, "drop", handleSingleDropInContainer)
 }
+
+findCmd('MetaOops').regexes = [ /^(?:oops (.+))$/ ]
+findCmd('MetaOops').script = function(objects) {
+  console.log('MetaOopsy!')
+  return io.againOrOops(false,objects)
+}
+findCmd('MetaOops').objects = [
+  {special:'text'},
+]
+
+io.againOrOops = function(isAgain,objects) {
+  if (io.savedCommands.length === 0) {
+    metamsg(lang.again_not_available)
+    return world.FAILED
+  }
+  io.savedCommands.pop() // do not save AGAIN/OOPS
+  if (isAgain) {
+    parser.parse(io.savedCommands[io.savedCommands.length - 1])
+    return world.SUCCESS_NO_TURNSCRIPTS;
+  }
+  else {
+    if (typeof game.unrecognizedObjects == 'undefined' || game.unrecognizedObjects.length == 0){
+      msg ("There is nothing to correct.", {}, 'parser')
+      return world.SUCCESS_NO_TURNSCRIPTS;
+    }
+    let toCorrect = io.savedCommands[io.savedCommands.length - 1]
+    let corrected = toCorrect.replace(game.unrecognizedObjects[game.unrecognizedObjects.length-1], objects[0])
+    //document.querySelector('#textbox').value = corrected
+    game.unrecognizedObjects = []
+    
+    const s = corrected
+    log(s)
+    msg ("(" + s + ")", {}, 'parser')
+    if (s) {
+      if (io.savedCommands[io.savedCommands.length - 1] !== s && !io.doNotSaveInput) {
+        io.savedCommands.push(s)
+      }
+      io.savedCommandsPos = io.savedCommands.length;
+      parser.parse(s);
+      if (io.doNotEraseLastCommand) {
+        io.doNotEraseLastCommand = false
+      } else {
+        document.querySelector('#textbox').value = ''
+      }
+    }
+  }
+}
