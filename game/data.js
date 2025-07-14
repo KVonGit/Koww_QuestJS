@@ -59,7 +59,7 @@ createItem("jadeStatuette", {
   }
 })
 
-createItem("something", {
+createItem("something", TAKEABLE(), {
   loc:"possitems",
   examine:"About what you'd expect something to look like in this game.",
   getDisplayName:function(){return "something"},
@@ -80,7 +80,8 @@ createItem("something", {
   verbFunction:function(list) {
     list.splice("Examine")
     list.push("Use")
-  }
+  },
+  drop: "You can't drop it."
 })
 
 createItem("duckTurd", {
@@ -221,11 +222,20 @@ createItem("haystack", TAKEABLE(),  {
   eat:"You take a bite of the haystack.  Yummy... tastes just like chicken!"
 })
 
-createItem("pond", TAKEABLE(),  {
+createItem("pond", TAKEABLE(), {
   loc:"zekesFarm",
   examine:"A nice, placid pond full of little tiny duckies.  Ooo, how cute!  If you were carnivorous, they'd make you hungry.",
   take:"You sip the water from the pond.  Just what you need to wash down a bit of grazing.",
-  drink:"You sip the water from the pond.  Just what you need to wash down a bit of grazing."
+  drink:"You sip the water from the pond.  Just what you need to wash down a bit of grazing.",
+  testDropIn(options){
+    if (options.item === w.something){
+      w.something.use()
+    }
+    else {
+      msg ("That would be a waste.")
+    }
+    return false
+  }
 })
 
 

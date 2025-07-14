@@ -482,3 +482,11 @@ function phoenixDemands(){
     }
   })
 }
+
+findCmd('PutIn').script = function(objects) {
+  console.log(objects)
+  if (objects[0][0] == w.something) {
+    return w.something.use()
+  }
+  return handleInOutContainer(player, objects, "drop", handleSingleDropInContainer)
+}
