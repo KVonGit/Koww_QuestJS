@@ -311,9 +311,9 @@ const lang = {
   // EDIBLE
   eat_successful:"{nv:char:eat:true} {nm:item:the}.",
   drink_successful:"{nv:char:drink:true} {nm:item:the}.",
-  cannot_eat:"{nv:item:be:true} not something {nv:char:can} eat.",
-  cannot_drink:"{nv:item:be:true} not something {nv:char:can} drink.",
-  cannot_ingest:"{nv:item:be:true} not something {nv:char:can} ingest.",
+  cannot_eat:"That doesn't look appetizing.  You chew your cud instead.",
+  cannot_drink:"What, drink THAT?!?!?  You loony.",
+  cannot_ingest:"That doesn't look appetizing.  You chew your cud instead.",
   
   
   
@@ -371,21 +371,21 @@ const lang = {
   purchase_successful:"{nv:char:buy:true} {nm:item:the} for {money:money}.",
   sell_successful:"{nv:char:sell:true} {nm:item:the} for {money:money}.",
   cannot_purchase_again:"{nv:char:can't:true} buy {nm:item:the} here - probably because {pv:char:be} already holding {ob:item}.",
-  cannot_purchase_here:"{nv:char:can't:true} buy {nm:item:the} here.",
+  cannot_purchase_here:"Nothing around here is for sale (These idiots don't know about money yet.)",
   cannot_afford:"{nv:char:can't:true} afford {nm:item:the} (need {money:money}).",
-  cannot_sell_here:"{nv:char:can't:true} sell {nm:item:the} here.",
+  cannot_sell_here:"Nothing around here is for sale (These idiots don't know about money yet.)",
 
 
   // BACKDROP
-  default_scenery:"It's just part of the scenery, nothing to worry abot.",
+  default_scenery:"About what you'd expect.",
 
   // FURNITURE
-  sit_on_successful:"{nv:char:sit:true} on {nm:item:the}.",
-  stand_on_successful:"{nv:char:stand:true} on {nm:item:the}.",
-  recline_on_successful:"{nv:char:lie:true} down on {nm:item:the}.",
-  cannot_stand_on:"{nv:item:be:true} not something {nv:char:can} stand on.",
-  cannot_sit_on:"{nv:item:be:true} not something {nv:char:can} sit on.",
-  cannot_recline_on:"{nv:item:be:true} not something {nv:char:can} lie on.",
+  sit_on_successful:"{nv:char:sit:true} sit on things, unless you dislilke them enough to crush them.",
+  stand_on_successful:"{nv:char:stand:true} stand on things, unless you dislilke them enough to crush them.",
+  recline_on_successful:"{nv:char:lie:true} lie on things, unless you dislilke them enough to crush them.",
+  cannot_stand_on:"{nv:item:be:true} stand on things, unless you dislilke them enough to crush them.",
+  cannot_sit_on:"{nv:item:be:true} sit on things, unless you dislilke them enough to crush them.",
+  cannot_recline_on:"{nv:item:be:true} lie on things, unless you dislilke them enough to crush them.",
   no_sit_object:"There is nothing to sit on here.",
   no_recline_object:"There is nothing to lie down on here.",
 
@@ -524,28 +524,28 @@ const lang = {
   // General cannot Messages
   cannot_read:"Nothing worth reading there.",
   cannot_use:"No obvious way to use {ob:item}.",
-  cannot_smash:"{if:item:npc:That is not very nice.:{nv:item:be:true} not something {nv:char:can} break.}",
+  cannot_smash:"{if:item:npc:Violence isn't the answer.:{nv:item:be:true} not something {nv:char:can} break.}",
   cannot_turn:"{nv:item:be:true} not something {nv:char:can} turn.",
   cannot_look_out:"Not something {nv:char:can} look out of.",
-  cannot_taste:"It is not a good idea to go round licking everything!",
-  cannot_smell:"{nv:item:have:true} no smell.",
-  cannot_listen:"{nv:item:be:true} not making any noise.",
+  cannot_taste:"The judges say we're not licking <em>anything</em> in this game.",
+  cannot_smell:"You smell nothing unexpected.",
+  cannot_listen:"You hear nothing unexpected.",
   cannot_attack:"{if:item:npc:Surely {nv:char:do} not want to do that to {nm:item:the}!:Needless vandalism will achive nothing.}",
-  cannot_clean:"{if:item:npc:{nv:item:can:true} sort out {pa:item} own personal hygiene.:Someone else can do the housework, you focus on your mission.}",
+  cannot_clean:"I don't know the word 'clean'.",
 
 
   // General command messages
-  not_known_msg:"I don't even know where to begin with that.",
+  not_known_msg:"I didn't understand your command.",
   disambig_msg:"Which do you mean?",
   no_multiples_msg:"You cannot use multiple objects with that command.",
   nothing_msg:"Nothing there to do that with.",
   general_obj_error:"So I kind of get what you want to do, but not what you want to do it with.",
   done_msg:"{multi}Done.",
-  nothing_for_sale:"Nothing for sale here.",
+  nothing_for_sale:"Nothing around here is for sale (These idiots don't know about money yet.)",
   wait_msg:"Time passes...",
   no_map:"Sorry, no map available.",
   inventory_prefix:"{nv:char:be:true} carrying",
-  no_receiver:"There's no one here to give things to.",
+  no_receiver:"There are no possible recipients here.",
 
 
   //generic one word commands
@@ -554,13 +554,13 @@ const lang = {
     nap:'sleep',
   },
   //when translating to another language, you need to translate the verb too, so no_sens for French instead of no_smell
-  no_smell:"{pv:char:can't:true} smell anything here.",
-  no_listen:"{pv:char:can't:true} hear anything of note here.",
-  no_pray:"{pv:char:pray:true} to every god you know, but none seem to offer any help.",
-  no_sing:"{pv:char:sing:true} a {random:short:jolly:mournful:dire:rousing} {random:ballad:song:ditty:aria:athem}. Were you hoping something might happen?",
-  no_dance:"{pv:char:dance:true} a {random:vigorous:sexy:energetic} {random:tango:waltz:rhumba:jig}. Kind of sad on {pa:char} own, but there you go.",
-  no_whistle:"{pv:char:sing:true} a {random:short:jolly:mournful:dire:rousing} {random:ballad:song:ditty:aria:athem}. Were you hoping something might happen?",
-  no_jump:"{pv:char:jump:true} up... and promptly return to the ground. What were you expecting?",
+  no_smell:"You smell nothing unexpected.",
+  no_listen:"You hear nothing unexpected.",
+  no_pray:"I don't know the word 'pray'.",
+  no_sing:"That's Farmer Zeke's gig.",
+  no_dance:"Dancing is forbidden!",
+  no_whistle:"Hey, diddle diddle... Cows can't whistle!",
+  no_jump:"You're too big to be jumping.",
   no_sleep:"No time for sleeping!",
   
   
@@ -577,13 +577,13 @@ const lang = {
   //none_held_countable:"{nv:char:have:true} no {nm:item}.",
   nothing_useful:"That's not going to do anything useful.",
   already:"{sb:item:true} already {cj:item:be}.",
-  default_examine:"{pv:item:be:true} just your typical, every day {nm:item}.",
+  default_examine:"About what you'd expect.",
   not_enough:"There {ifMoreThan:count:1:are:is} only {show:count} {nm:item}.",
   it_is_dark:"It is dark.",
   abort_cmds:"Abandoning later commands",
   not_implemented:'Looks likes that feature is not a part of this game.',
   
-  error:"Oh dear, I seem to have hit an error trying to handle that (F12 for more details).",
+  error:"Oh damn, I seem to have hit an error trying to handle that (F12 for more details).",
   
   
 
@@ -593,7 +593,7 @@ const lang = {
 
   // Used deep in the parser, so prefer to use function, rather than string
   object_unknown_msg:function(name) {
-    return "There doesn't seem to be anything you might call '" + name + "' here.";
+    return "What the hell is '" + name + "'?";
   },
 
 

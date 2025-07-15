@@ -230,7 +230,7 @@ lang.object_unknown_msg =function(name) {
       name = lang.getName(parser.pronouns[lang.pronouns[key].objective])
     }
   }
-  return "There doesn't seem to be anything you might call '" + name + "' here.";
+  return "What the hell is '" + name + "'?";
   //return "You can't see that here."
 }
 
@@ -385,16 +385,16 @@ function playerWin(){
     rank = "BABY KOWW"
   }
   else if (player.score < 200) {
-    rank = "HALF-FAST KALF"
+    rank = "HALF&#8209;FAST KALF"
   }
   else if (player.score < 300) {
-    rank = "MOO-STLY HARMLESS"
+    rank = "MOO&#8209;STLY HARMLESS"
   }
   else if (player.score < 420) {
     rank = "MAGICIAN"
   }
   else {
-    rank = "GRAND MOO-STER WIZARD"
+    rank = "GRAND MOO&#8209;STER WIZARD"
   }
   msg("<br/><br/>In that game, you scored {show:player:score} of a possible {show:player:maxScore}, in {show:game:turnCount} turn{ifIs:game:turnCount:1::s}, granting you the rank: {b:" + rank + "}.", {game:game})
   io.finish()
@@ -424,16 +424,16 @@ findCmd('MetaScore').script = function(){
     rank = "BABY KOWW"
   }
   else if (player.score < 200) {
-    rank = "HALF-FAST KALF"
+    rank = "HALF&#8209;FAST KALF"
   }
   else if (player.score < 300) {
-    rank = "MOO-STLY HARMLESS"
+    rank = "MOO&#8209;STLY HARMLESS"
   }
   else if (player.score < 420) {
     rank = "MAGICIAN"
   }
   else {
-    rank = "GRAND MOO-STER WIZARD"
+    rank = "GRAND MOO&#8209;STER WIZARD"
   }
   msg ("Your score is {show:player:score} of a possible {show:player:maxScore}, in {show:game:turnCount} turn{ifIs:game:turnCount:1::s}, granting you the rank: {b:" + rank + "}.", {game:game})
 }

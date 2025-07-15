@@ -200,6 +200,14 @@ createItem("sign", TAKEABLE(), {
   }
 })
 
+createItem("pasture", {
+  loc:"kowwsChasm",
+  alias:"pasture of green grass",
+  examine:"About what you'd expect, very green.",
+  take:"That grass doesn't look appetizing. You chew your cud instead.",
+  scenery:true
+})
+
 createRoom("zekesFarm", {
   usedefaultprefix:false,
   alias:"Zeke's Farm",
@@ -219,7 +227,7 @@ createItem("haystack", TAKEABLE(),  {
   loc:"zekesFarm",
   examine:"About what you'd expect from a haystack.  It's made of... HAY!  You munch on it for a while.",
   take:"You take a bite of the haystack.  Yummy... tastes just like chicken!",
-  eat:"You take a bite of the haystack.  Yummy... tastes just like chicken!"
+  eat:"You take a bite of the haystack.  Yummy... tastes just like chicken!",
 })
 
 createItem("pond", TAKEABLE(), {
@@ -238,10 +246,19 @@ createItem("pond", TAKEABLE(), {
   }
 })
 
+createItem("ducks", {
+  loc:"zekesFarm",
+  alias:"little tiny ducks",
+  scenery:true,
+  examine:"About what you'd expect from little tiny duckies.",
+  take:"You can't reach them from here.",
+  pronouns:lang.pronouns.plural
+})
 
 createItem("zekesFarmhouseEntrance", {
   loc:"zekesFarm",
   alias:"Zeke's farmhouse",
+  synonyms:["Zeke's farm","Zeke's house"],
   listAlias:"<img src=\"assets/icons/houseicon.png\"> Zeke's Farmhouse",
   examine:"It's the entrance to the farmhouse.",
   otherSide:"zekesFarmhouse",
@@ -298,14 +315,15 @@ createItem("treasureChest", CONTAINER(true), {
 
 createRoom("zekesSilo", {
   alias:"Zeke's Silo",
-  desc:"Gee, this place smells just like rotting feed.  Standing in the silo, grinning like the idiot that he is, is Farmer {nm:Zeke}.<br/><br/>You can go {exit:out}.",
+  desc:"Gee, this place smells just like rotting feed.  Standing in the silo, grinning like the idiot that he is, is {nm:Zeke}.<br/><br/>You can go {exit:out}.",
   out:new Exit("zekesFarm")
 })
 
 createItem("Zeke", NPC(false), {
   properName:true,
+  alias:"Farmer Zeke",
   loc:"zekesSilo",
-  listAlias:"Zeke (character)",
+  listAlias:"Zeke",
   examine:"He's wearing a straw hat and at least one of his teeth is rotting away, but he seems pleased as punch that you've arrived.",
   talkto:"\"Hey there, good buddy!{ifIs:milk:loc:player: Say, bein' a wizard an' all, couldja find it in yer heart to gimme some magic milk?  I'm all out!}\"",
   attack:"You may be an evil sorcerer, but at least you're an ETHICAL evil sorcerer.  No killing allowed!  Especially not of idiots.  They don't know they're idiots.",
@@ -597,6 +615,16 @@ createItem("resetUsingPronounTurnscript",
     eventActive:true,
     eventScript:function() { 
       window.usingPronoun = false
+     }
+  }
+)
+
+createItem("noMoreOopsTurnscript", 
+  {
+    eventPeriod:1,
+    eventActive:true,
+    eventScript:function() { 
+      game.unrecognizedObjects = []
      }
   }
 )

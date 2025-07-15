@@ -44,7 +44,7 @@ body {
   text-size-adjust: none;
 }
 .dark-body {
-  background-color: #111;
+  background-color: darkgray;
   color: #eee;
 }
 .narrow-body {
@@ -177,7 +177,7 @@ pre {
   color:purple;
 }
 .dark-body .help-eg {
-  color:#e8e;
+  color:rgb(207, 238, 136);
 }
 
 /***
@@ -231,7 +231,7 @@ pre {
   width:95%;
 }
 .dark-body   #textbox {
-  background-color: #111;
+  background-color: inherit;
   color: white;
 }
 
@@ -240,7 +240,7 @@ pre {
   color:green;
 }
 .dark-body  .input-text {
-  color:lightgreen;
+  color:inherit;
 }
 
 /***
@@ -266,7 +266,7 @@ pre {
   margin-bottom: 5px;
 }
 .dark-body .pane-div {
-  background-color:#606;
+  background-color:gray;
 }
 
 .pane-content {
@@ -314,7 +314,7 @@ td.compass-button {
   height: 20px;
 }
 .dark-body td.compass-button {
-  background-color:#404;
+  background-color:black;
 }
 
 td.compass-button:hover {
@@ -358,7 +358,7 @@ span.compass-button {
   margin-bottom: 0px;
 }
 .dark-body  div  .item {
-  background-color:#404;
+  background-color:black;
 }
 
 .item:first-child {
@@ -549,138 +549,6 @@ th, td {
 }
 
 
-/***
-* Panel (is this used anywhere; not that I can find)
-***/
-/*
-#panel {
-  width: 101%;
-  border: #ccc solid 1px;
-  border-radius: 4px;
-  background-color: #f9f9f9;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-#panel .head {
-  height: 20px;
-  border-bottom: #ccc solid 1px;
-  padding: 5px 5px 5px 10px;
-}
-
-#panel .content {
-  padding: 10px 5px 10px 5px;
-  margin-bottom: 10px;
-}
-
-#panel .footer {
-  clear: both;
-  height: 20px;
-  border-top: #ccc solid 1px;
-  padding: 5px 5px 5px 10px;
-}
-
-#panel .title {
-  float: left;
-  text-align: left;
-  font-weight: bold;
-}
-
-#panel .toggle {
-  float: right;
-  text-align: right;
-  padding-right: 5px;
-}
-
-#panel p {
-  padding: 10px;
-  margin-bottom: 0px;
-}
-
-#panel ul li {
-  list-style-type: circle;
-}
-
-#panel a {
-  color: #000000;
-  text-decoration: none;
-}
-
-#panel a:hover {
-  color:blue;
-}
-
-#panel .sidepane {
-  float: left;
-  width: 25%;
-  margin-bottom: 4px;
-  padding: 10px;
-}
-
-#panel .show {
-  display: block;
-}
-
-#panel .hide {
-  display: none;
-}
-
-#panel .sidepane ul {
-  counter-reset: section;
-}
-
-#panel .sidepane li::before {
-  counter-increment: section;
-  content: counters(section, ".") ". ";
-  font-weight: bold;
-}
-
-#panel .sidepane li {
-  list-style-type: none;
-  margin-bottom: 7px;
-}
-*/
-
-/***
-* Rules (is this used anywhere; not that I can find)
-***/
-/*
-.rules {
-  float: right;
-  width: 70%;
-  margin-bottom: 10px;
-  counter-reset: section;
-}
-
-.rules div {
-
-}
-
-.rules p::before {
-  counter-increment: section;
-  content: counters(section, ".") ". ";
-  font-weight: bold;
-}
-
-.rules p {
-  text-align: justify;
-  margin-bottom: 15px;
-}
-
-.rules .fragment {
-  background-color: #ECD5D8;
-  color: #9C2A4D;
-  margin-left: -2px;
-  padding: 5px;
-  border-radius: 5px;
-}
-
-.rules .fragment a {
-  color: #9C2A4D;
-}*/
-
-
-
 
 /***
 * Toolbar 
@@ -852,7 +720,7 @@ th, td {
 }
 
 .sidepane-menu-option {
-  background-color: #faf;
+  background-color: gray;
   border:solid black 1px;
   cursor: pointer;
   padding:5px;
@@ -862,7 +730,7 @@ th, td {
   margin-top: 10px;
 }
 .dark-body #sidepane-menu .sidepane-menu-option {
-  background-color:#306;
+  background-color:gray;
 }
 
 a {
@@ -872,7 +740,7 @@ a {
 
 /* Used by transcripts */
 .input {
-  color:green;
+  color:inherit;
 }
 .comment {
   color:orange;
