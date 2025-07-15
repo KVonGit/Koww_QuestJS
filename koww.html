@@ -16,7 +16,7 @@
   <script>
     let folder = 'game/'
     let loaded = false
-    if (window.location.search) folder = 'game-' + window.location.search.substring(1) + '/'
+    if (window.location.search) folder = 'game-' + window.location.search.substring(1) + ''
     const qeditor = false
     const resourcesFolder = ''
   </script>
@@ -26,12 +26,12 @@
 
   <script>
     const myScript = document.createElement("script")
-    myScript.setAttribute("src", folder + '/settings.js')
+    myScript.setAttribute("src", folder + 'settings.js')
     myScript.onload = function() {
       settings.writeScript(folder, "", "")
     }
     myScript.onerror = function() {
-      console.log("Failed to load file \"" + folder + "/settings.js\".")
+      console.log("Failed to load file \"" + folder + "settings.js\".")
       console.log("Check the file and folder actually exist.")
       console.log("This is probably because the folder \"" + folder + "\" does not exist, perhaps because it is wrongly specified in the address.")
     }
