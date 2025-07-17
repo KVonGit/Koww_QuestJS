@@ -33,7 +33,6 @@ createItem("pitchfork", {
     return pitchproc()
   },
   verbFunction:function(list) {
-    list.splice("Examine")
     list.push("Use")
   }
 })
@@ -44,7 +43,6 @@ createItem("kowwNothing", {
   examine:"You see nothing.",
   getDisplayName:function(){return "nothing"},
   verbFunction:function(list) {
-    list.splice("Examine")
     list.push("Give")
   }
 })
@@ -54,7 +52,6 @@ createItem("jadeStatuette", {
   loc:"possitems",
   examine:"An ugly statuette, made of jade.",
   verbFunction:function(list) {
-    list.splice("Examine")
     list.push("Give")
   }
 })
@@ -78,7 +75,6 @@ createItem("something", TAKEABLE(), {
     return world.FAILED
   },
   verbFunction:function(list) {
-    list.splice("Examine")
     list.push("Use")
   },
   drop: "You can't drop it."
@@ -89,7 +85,6 @@ createItem("duckTurd", {
   alias:"duck turd",
   examine:"A foul dropping.",
   verbFunction:function(list) {
-    list.splice("Examine")
     list.push("Give")
   }
 })
@@ -97,10 +92,8 @@ createItem("duckTurd", {
 createItem("goblinSpit", {
   loc:"possitems",
   alias:"goblin spit",
+  synonyms:["jar of spit","jar of goblin spit"],
   examine:"Yuck... It's chunky!",
-  verbFunction:function(list) {
-    list.splice("Examine")
-  }
 })
 
 createItem("grapplingHook", {
@@ -122,7 +115,6 @@ createItem("grapplingHook", {
     return world.FAILED
   },
   verbFunction:function(list) {
-    list.splice("Examine")
     list.push("Use")
   }
 })
@@ -132,7 +124,6 @@ createItem("wingFeather", {
   alias:"wing feather",
   examine:"A wing feather from a Phoenix.",
   verbFunction:function(list) {
-    list.splice("Examine")
     list.push("Give")
   }
 })
@@ -151,7 +142,6 @@ createItem("flyScroll", {
     return world.FAILED
   },
   verbFunction:function(list) {
-    list.splice("Examine")
     list.push("Use")
   }
 })
@@ -172,7 +162,6 @@ createItem("purplePaint", {
     return world.FAILED
   },
   verbFunction:function(list) {
-    list.splice("Examine")
     list.push("Use")
   }
 })
@@ -211,7 +200,7 @@ createItem("pasture", {
 createRoom("zekesFarm", {
   usedefaultprefix:false,
   alias:"Zeke's Farm",
-  desc:"You stand outside of a small {exit:go to farmhouse:farmhouse} with a {exit:go to silo:silo} beside it.<br/><br/>There is a {nm:haystack} and a {nm:pond} here.<br/><br/>You can go {exit:west}, {exit:north}, {exit:east}, or {exit:south}.",
+  desc:"You stand outside of a small farmhouse with a silo beside it.<br/><br/>There is a {nm:haystack} and a {nm:pond} here.|You can go to {exit:go to farmhouse:Zeke's Farmhouse} or {exit:go to silo:Zeke's Silo}.<br/><br/>You can go {exit:west}, {exit:north}, {exit:east}, or {exit:south}.",
   south:new Exit("goblinTrail"),
   west: new Exit("kowwsChasm"),
   north:new Exit("landOfTheNecroYaks"),
@@ -249,6 +238,7 @@ createItem("pond", TAKEABLE(), {
 createItem("ducks", {
   loc:"zekesFarm",
   alias:"little tiny ducks",
+  synonyms:["little tiny duckies"],
   scenery:true,
   examine:"About what you'd expect from little tiny duckies.",
   take:"You can't reach them from here.",
@@ -288,7 +278,7 @@ createRoom("zekesFarmhouse", {
   out:new Exit("zekesFarm")
 })
 
-createItem("table", SURFACE(), {
+createItem("table", SURFACE(), TAKEABLE(), {
   loc:"zekesFarmhouse",
   examine:"Hmmm, what's a table doing here?{once:  Cool! It has a {nm:treasureChest} on it!}",
   take:"Farmer Zeke took the wise precaution of bolting his table to the floor."
@@ -325,7 +315,7 @@ createItem("Zeke", NPC(false), {
   loc:"zekesSilo",
   listAlias:"Zeke",
   examine:"He's wearing a straw hat and at least one of his teeth is rotting away, but he seems pleased as punch that you've arrived.",
-  talkto:"\"Hey there, good buddy!{ifIs:milk:loc:player: Say, bein' a wizard an' all, couldja find it in yer heart to gimme some magic milk?  I'm all out!}\"",
+  talkto:"You moo, then Zeke says:|\"Hey there, good buddy!{ifIs:milk:loc:player: Say, bein' a wizard an' all, couldja find it in yer heart to gimme some magic milk?  I'm all out!}\"",
   attack:"You may be an evil sorcerer, but at least you're an ETHICAL evil sorcerer.  No killing allowed!  Especially not of idiots.  They don't know they're idiots.",
   receiveItems:[
     {
@@ -367,7 +357,7 @@ createItem("road", TAKEABLE(), {
 
 createRoom("goblinLair", {
   alias:"Goblin Lair",
-  desc:"About twenty goblins patrol the front of {once:a}{notfirst:this} massive cave complex.{once:  They eye you for a moment, then decide not to attack.  You return the favor and don't kill them.}<br/><br/>There is a {nm:cliff} here.<br/><br/>A {nm:goblinGuard} is nearby.<br/><br/>You can go {exit:in:Inside the Goblin Lair}.<br/><br/>You can go {exit:north}.",
+  desc:"About twenty goblins patrol the front of {once:a}{notfirst:this} massive cave complex.{once:  They eye you for a moment, then decide not to attack.  You return the favor and don't kill them.}<br/><br/>A {nm:goblinGuard} is nearby.<br/><br/>You can go {exit:in:Inside the Goblin Lair}.<br/><br/>You can go {exit:north}.",
   north:new Exit("goblinTrail"),
   in:new Exit("insideTheGoblinLair", {scenery:true}),
   dests:[
@@ -386,7 +376,7 @@ createItem("goblinGuard", NPC(false), {
   defArticle:"the",
   indefArticle:"the",
   examine:"It's very ugly, like most of its kind.  Don't get too close; you could faint from the smell.",
-  talkto:"\"Yu wan go cave?  No try no funny bizniss -- I can tell.{ifIs:w:something:loc:possitems:  Me so grate! Me giv yu sumthin win yu have nuthin!}\"",
+  talkto:"You moo. The guard says:|\"Yu wan go cave?  No try no funny bizniss -- I can tell.{ifIs:something:loc:possitems:  Me so grate! Me giv yu sumthin win yu have nuthin!}\"",
   receiveItems:[
     {
       item:w.kowwNothing,
@@ -410,17 +400,6 @@ createItem("goblinGuard", NPC(false), {
   pronouns:lang.pronouns.thirdperson
 })
 
-createItem("cliff", TAKEABLE(), {
-  loc:"goblinLair",
-  examine:"It's a cliff; you could {command:climb it}, but it might be a difficult climb.",
-  take:"If you want to {command:climb the cliff}, say so!",
-  climbverb:"After a difficult climb, you reach the top.  You're very pleased with yourself.  Unfortunately, the ledge crumbles beneath you, and you plummet back to the ground.",
-  pronouns:lang.pronouns.plural,
-  verbFunction:function(list) {
-    list.push("Climb")
-  },
-})
-
 createItem("insideTheGoblinLairEntrance", {
   loc:"goblinLair",
   alias:"Inside the Goblin Lair",
@@ -436,7 +415,7 @@ createItem("insideTheGoblinLairEntrance", {
 
 createRoom("insideTheGoblinLair", {
   alias:"Inside the Goblin Lair",
-  desc:"You are escorted to the Goblin King's throne room, a large chamber ornamented with statues of nude female goblins.{once:  You try hard to avoid puking.}The {nm:goblinKing} is here.<br/><br/>You can go {exit:out}.",
+  desc:"You are escorted to the Goblin King's throne room, a large chamber ornamented with statues of nude female goblins.{once:  You try hard to avoid puking.}|The {nm:goblinKing} is here.<br/><br/>You can go {exit:out}.",
   out:new Exit("goblinLair")
 })
 
@@ -447,7 +426,7 @@ createItem("goblinKing", NPC(false), {
   defArticle:"the",
   indefArticle:"the",
   examine:"An officious-looking, double-chinned goblin monarch sits royally atop a throne of deer hide.",
-  talkto:"\"Hoo hoo hoo!  Goblinz{ifIs:goblinSpit:parent:possitems: so grate, our spit is assid}!{ifIs:w:goblinSpit:loc:possitems:  We spit on yu if yu make us angree!}{ifIs:jadeStatuette:loc:possitems:  If yu hav tiny statyoo of jade, we giv yu nice thing!}\"",
+  talkto:"You moo, and the Goblin King says:|\"Hoo hoo hoo!  Goblinz so grate{ifIs:goblinSpit:loc:possitems:, our spit is assid}!{ifIs:goblinSpit:loc:possitems: We spit on yu if yu make us angree! If yu hav tiny statyoo of jade, we giv yu nice thing!}\"",
   receiveItems:[
     {
       item:w.jadeStatuette,
@@ -489,8 +468,14 @@ createItem("statues", TAKEABLE(), {
   pronouns:lang.pronouns.plural
 })
 
+createItem("throneOfDeerHide", {
+  scenery:true,
+  loc:"insideTheGoblinLair",
+  alias:"throne of deer hide"
+})
+
 createRoom("landOfTheNecroYaks", {
-  alias:"Land of the NecroYaks",
+  alias:"the Land of the NecroYaks",
   desc:"The greenness of the farmland dissolves into gray bleakness as you pass into the land of the NecroYaks.{once:  Yaks are the sworn enemies of cows -- you'd better stay on your toes!}<br/><br/>There is a {nm:sign1} here.<br/><br/>You can go {exit:north} or {exit:south}.",
   south:new Exit("zekesFarm"),
   north:new Exit("ambushPoint")
@@ -506,7 +491,7 @@ createItem("sign1", TAKEABLE(), {
 
 createRoom("ambushPoint", {
   alias:"Deep in NecroYak Territory",
-  desc:"A cliff face blocks your way here.  It's steep -- you can't climb.  If you want to continue, you'll have to {exit:search} the face.<br/><br/>You can go {exit:south}.",
+  desc:"A {nm:cliff} blocks your way here.  It's steep -- you can't climb.  If you want to continue, you'll have to search the face.<br/><br/>You can go {exit:south}.",
   south:new Exit("landOfTheNecroYaks"),
   searchable:true,
   search:function(){
@@ -526,19 +511,24 @@ createRoom("ambushPoint", {
   }
 })
 
-createItem('cliffFace', {
+createItem('cliff', {
   loc:"ambushPoint",
   alias:'cliff face',
-  scenery:true,
-  take:"Nope, but you could try searching it instead.",
-  climbverb:"It's steep -- you can't climb.",
-  search:function(){return findCmd('SearchLocation').script()},
-  examine:"It's steep -- you can't climb."
+  examine:"It's a cliff; you could climb it, but it might be a difficult climb.",
+  take:"If you want to climb the cliff, say so!",
+  climbverb:"After a difficult climb, you reach the top.  You're very pleased with yourself.  Unfortunately, the ledge crumbles beneath you, and you plummet back to the ground.",
+  search:function(){
+    return findCmd('SearchLocation').script()
+  },
+  verbFunction:function(list) {
+    list.push("Climb")
+    list.push("Search")
+  },
 })
 
 createRoom("phoenixMountainPass", {
   alias:"Phoenix Mountain Pass",
-  desc:"The towering {nm:mountains} surround you on all sides but back to your {exit:west}.  Passage farther {exit:east} is remotely possible, should you be brave or foolhardy enough to try it.",
+  desc:"The towering {nm:mountains} surround you on all sides but back to the {exit:west}.  Passage farther {exit:east} is remotely possible, should you be brave or foolhardy enough to try it.",
   west:new Exit("zekesFarm"),
   east:new Exit("phoenixPeak"),
   up:new Exit('phoenixMountainPass', {scenery:true, simpleUse:function(char) {

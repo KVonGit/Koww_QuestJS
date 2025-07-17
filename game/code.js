@@ -439,7 +439,7 @@ findCmd('MetaScore').script = function(){
 }
 
 function phoenixSpeak(){
-  msg("\"The Resplendent Magnificent Phoenix demands to know {i:why} such a weakling as you has come here!  If you do not have my wing feather with you, I'm afraid I must ask you to leave {i:immediately!}  Now, do you have my wing feather or not -- {b:Yes} or {b:No}?\"")
+  msg("You moo. The Resplendent Magnificent Phoenix responds:|\"The Resplendent Magnificent Phoenix demands to know {i:why} such a weakling as you has come here!  If you do not have my wing feather with you, I'm afraid I must ask you to leave {i:immediately!}  Now, do you have my wing feather or not -- {b:Yes} or {b:No}?\"")
   askText("", function(result) {
     if (result.match(lang.yes_regex)) {
       if (w.wingFeather.loc == "player"){

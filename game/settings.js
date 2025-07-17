@@ -3,7 +3,7 @@
 
 settings.title = "The Adventures of Koww the Magician (QuestJS port)"
 settings.author = "Brian the Great"
-settings.version = "0.3.2"
+settings.version = "0.3.3"
 settings.ifid = "BBD5D89-78A2-4278-A85E-BC291A41FFE8"
 settings.thanks = ["Brian the Great","AlexWarren","cellarderecho","ThePix","DavyB","Pertex"]
 settings.warnings = "Puns, Mild Profanity"
@@ -69,7 +69,7 @@ settings.inventoryPane = [
 ]
 
 settings.roomTemplate = [
-  "You are in {color:red:{hereName}}.",
+  "You are {ifIs:player:loc:insideTheGoblinLair::{ifIs:player:loc:ambushPoint::{ifIs:player:loc:goblinTrail:o:{ifIs:player:loc:phoenixPeak:o:{ifIs:player:loc:phoenixMountainPass:o:{ifIs:player:loc:zekesFarm:o:i}}}}n }}{color:red:{hereName}}.",
   "{hereDesc}"
 ]
 
