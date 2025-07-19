@@ -11,8 +11,8 @@
 
 #status-bar {
   /*max-width: 600px;*/
-  width: 770px;
-  max-width: 770px;
+  width: 764px;
+  max-width: 764px;
   display: block;
   height: 30px;
   position: fixed;
@@ -21,8 +21,8 @@
   margin-right: auto;
   font-size: 1.25em;
   padding:2px;
-  color: #f9f9f9;
-  background: black;
+  background: #f9f9f9;
+  border: #ccc 1px solid;
   z-index:100;
 }
 
